@@ -1,14 +1,14 @@
 import './App.css';
 import FilterArea from './Components/Filter/Filter';
 import Layout from './Components/Layout/Layout';
-// import Product from './Components/Product/Product';
+import Product from './Components/Product/Product';
 
 function App() {
   return (
     <div >
       <Layout>
         <FilterArea />
-        {/* <Product /> */}
+        <Product />
       </Layout>
     </div>
   );
