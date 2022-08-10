@@ -1,0 +1,43 @@
+
+.product_card_inner {
+    height: 300px;
+}
+
+.product_image_box {
+    height: 75%;
+    background-color: grey;
+}
+
+
+
+.product_brand_name {
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.product_description {
+    color: grey;
+    font-size: 12px;
+}
+
+.product_price {
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.product_actual_price {
+    color: grey;
+    font-weight: 400
+}
+
+.product_price_discount {
+    color: red;
+    font-style: italic;
+    font-weight: 400;
+}
+
+.mini_description_box {
+    /*  */
+}
