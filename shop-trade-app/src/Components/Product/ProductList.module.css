@@ -3,12 +3,29 @@
     height: 300px;
 }
 
-.product_image_box {
+.product_image_box_main {
+    position: relative;
     height: 75%;
-    background-color: grey;
+    overflow: hidden;
 }
 
+.image-box{
+    position: absolute;
+    z-index: 100;
+    background-color: grey;
+    overflow: hidden;
+}
 
+.product_card{
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1), 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+.product_card:hover{
+    transition: 0.25s ease-in-out;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+}
 
 .product_brand_name {
     color: black;

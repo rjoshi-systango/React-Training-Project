@@ -1,0 +1,9 @@
+
+.categoryBtn {
+    border: 1px solid grey;
+    border-radius: 2rem;
+    padding: 5px 15px 5px 15px;
+    background-color: white;
+    margin: 5px;
+    color: grey;
+}
