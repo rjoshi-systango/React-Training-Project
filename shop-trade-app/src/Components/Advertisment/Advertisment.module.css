@@ -1,0 +1,25 @@
+
+
+.invite_text {
+    font-size: 16px;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+}
+
+.invite_button {
+    height: 28px;
+    font-family: Sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: black;
+    background-color: white;
+    border-radius: 20px;
+    border: 0px;
+    text-align: center;
+}
+
+.invite_bar{
+    background-image:  linear-gradient(to right, black , #ff8c00);
+    min-height: 40px;
+  }
