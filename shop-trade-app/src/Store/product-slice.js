@@ -1,4 +1,4 @@
-import {  createSlice  } from "@reduxjs/toolkit"
+import { createSlice  } from "@reduxjs/toolkit";
 
 const initialState = {
     productList: [],
@@ -22,7 +22,17 @@ const productDataSlice = createSlice({
             else {
                 state.filteredProductList = state.productList.filter(item => item.tag === selectedCategory);
             }
-        } 
+        }, 
+        filterProductByPrice(state, action) {
+            const productsList = action.payload.productsList;
+            console.log(productsList);
+        },
+        searchProduct(state, action){
+            let searchData = action.payload.enteredSearchInput;
+            state.filteredProductList = state.productList.filter((product) => {
+                return product.name.includes(searchData) || product.vendor.includes(searchData) || product.tag.includes(searchData);
+            });
+        }
                
     }
 });
@@ -59,6 +69,19 @@ export const fetchCartData = () => {
        }
        
     }
+}
+
+export const sorting = (sortOrder ,filteredProductList) => {
+    console.log(filteredProductList, sortOrder);
+    return (dispatch) => {
+        dispatch(
+            productDataActions.filterProductByPrice({
+                productsList: filteredProductList
+            })
+        )
+    }
+ 
+
 }
 
 export const productDataActions = productDataSlice.actions;
