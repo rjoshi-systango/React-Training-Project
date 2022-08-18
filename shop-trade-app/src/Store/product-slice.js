@@ -2,7 +2,8 @@ import { createSlice  } from "@reduxjs/toolkit";
 
 const initialState = {
     productList: [],
-    filteredProductList: []
+    filteredProductList: [],
+    favouriteProductList: []
 }
 
 const productDataSlice = createSlice({
@@ -32,6 +33,10 @@ const productDataSlice = createSlice({
             state.filteredProductList = state.productList.filter((product) => {
                 return product.name.includes(searchData) || product.vendor.includes(searchData) || product.tag.includes(searchData);
             });
+        },
+        addFavouriteItem(state, action) {
+            // let productId = action.payload.id;
+
         }
                
     }
@@ -80,8 +85,33 @@ export const sorting = (sortOrder ,filteredProductList) => {
             })
         )
     }
- 
+}
 
+
+export const addFavourite = (id) => {
+    return async(dispatch) => {
+        const sendData = async() => {
+
+            const response = await fetch("https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail.json", {
+                method: "POST",
+                body: JSON.stringify(id),
+            })
+            if (!response.ok) {
+                throw new Error("Failed to send data");
+            }
+
+            let data = await response.json();
+            return data;
+        }
+
+        try{
+            const data = await sendData();
+            console.log(data);
+        }
+        catch {
+            console.log("error");
+        }
+    }
 }
 
 export const productDataActions = productDataSlice.actions;
