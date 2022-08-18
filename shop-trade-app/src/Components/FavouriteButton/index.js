@@ -8,7 +8,6 @@ import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 import { useState } from 'react';
 
 const FavouriteButton = (props) => {
-    // console.log(props.id);
     const [isFavourite, setIsFavourite] = useState(false);
     const dispatch = useDispatch();
 
