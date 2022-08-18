@@ -1,6 +1,5 @@
 import './App.css';
-
-import { fetchCartData } from './Store/product-slice';
+import { fetchCartData, fetchFavouriteDetail } from './Store/product-slice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +18,7 @@ const App = () => {
   useEffect(() => {
 
     dispatch(fetchCartData());
+    dispatch(fetchFavouriteDetail());
   }, [dispatch]);
 
   return (
@@ -27,7 +27,6 @@ const App = () => {
       <Advertisment />
 
       <Switch>
-
         <Route path="/" exact>
           <HomePage />
         </Route>

@@ -1,10 +1,17 @@
 import classes from "./index.module.css";
 import logo from "../../Assests/img/systango_logo.jpeg";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { productDataActions } from "../../Store/product-slice";
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from "react-router-dom"; 
+
 
 const Header = () => {
+    const favouriteProduct = useSelector(state => state.favouriteProductList);
+
     const dispatch = useDispatch();
+
     const searchInputChangeHandler = (event) => {
         const enteredSearchInput = event.target.value;
         dispatch(productDataActions.searchProduct({ enteredSearchInput }));
@@ -12,9 +19,11 @@ const Header = () => {
 
     return (
         <header className={`${classes.header} ` }>
-            <div className={classes.img_logo_box}>
-                <img src={logo} alt="logo"/>
-            </div>
+            <Link to="/">
+                <div className={classes.img_logo_box}>
+                    <img src={logo} alt="logo"/>
+                </div>  
+            </Link>
             <div className={classes.header_center}>
                 <p className={classes.header_center_content}>Shop</p>
                 <p className={classes.header_center_content}>About us</p>
@@ -23,6 +32,11 @@ const Header = () => {
             </div>
             <div className={classes.header_right}>
                 <input type="text" className={classes.header_left_content} placeholder="search" onChange={searchInputChangeHandler}/>
+                <Link to="/favourite">
+                    <p className={classes.header_left_content} >
+                        <FontAwesomeIcon icon={faHeart} />{favouriteProduct.length}
+                    </p>
+                </Link>
                 <p className={classes.header_left_content}>Profile</p>
                 <p className={classes.header_left_content}>Cart</p>
             </div>
