@@ -1,0 +1,18 @@
+/* .filter_category_container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+} */
+
+.filter_category_left {
+    display: flex;
+    flex-direction: row;
+}
+
+.filter_option {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+ 

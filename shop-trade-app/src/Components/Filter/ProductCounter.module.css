@@ -1,0 +1,10 @@
+.product_stats_heading{
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .product_stats_stats{
+    font-size: 20px;
+    font-weight: 200;
+    color: grey;
+  }

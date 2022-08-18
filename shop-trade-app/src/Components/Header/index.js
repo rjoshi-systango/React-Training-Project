@@ -1,9 +1,9 @@
-import classes from "./MainHeaders.module.css";
+import classes from "./index.module.css";
 import logo from "../../Assests/img/systango_logo.jpeg";
 import { useDispatch } from 'react-redux';
 import { productDataActions } from "../../Store/product-slice";
 
-const MainHeaders = () => {
+const Header = () => {
     const dispatch = useDispatch();
     const searchInputChangeHandler = (event) => {
         const enteredSearchInput = event.target.value;
@@ -30,4 +30,4 @@ const MainHeaders = () => {
     )
 }
 
-export default MainHeaders;
+export default Header;

@@ -1,4 +1,4 @@
-import classes from './Advertisment.module.css';
+import classes from './index.module.css';
 
 const Advertisment = () => {
     return (
