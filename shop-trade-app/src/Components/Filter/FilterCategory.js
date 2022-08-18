@@ -21,11 +21,11 @@ const FilterCategory = () => {
     }
     const categoryContainer = Object.keys(uniqueCategory);
   
-    console.log(categoryContainer);
+    // console.log(categoryContainer);
 
     const filterClickHandler = (event) => {
         let selectedCategory = event.target.value;
-        console.log(selectedCategory);
+        // console.log(selectedCategory);
         dispatch(
             productDataActions.filterProduct({category: selectedCategory})
             );
@@ -43,15 +43,3 @@ const FilterCategory = () => {
 }
 
 export default FilterCategory;
-
-
-// state.productList.map((item) => {
-//     // console.log(item.tag);
-//     const tag = item.tag;
-//         if (!uniqueCategory[tag]) {
-//             uniqueCategory[tag] = true;
-//             console.log(uniqueCategory);
-//         }
-//         // console.log(item.id);
-//     return ({});
-// });

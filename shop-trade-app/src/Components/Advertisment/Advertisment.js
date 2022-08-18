@@ -8,7 +8,7 @@ const Advertisment = () => {
         // </div>
         <div className={`${classes.invite_bar} container-fluid d-flex flex-column flex-sm-row align-items-center justify-content-center py-2`}>
         <p className={`{${classes.invite_text} m-0`} style={{color: "white"}}>Invite Friends To The Fashion Festival $ Get Up To $150 Bonus Every Referal</p>
-        <button class={`${classes.invite_button} mx-4 px-5`}>Invite Now</button>
+        <button className={`${classes.invite_button} mx-4 px-5`}>Invite Now</button>
       </div>
     )
 }

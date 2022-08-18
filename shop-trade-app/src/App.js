@@ -5,6 +5,10 @@ import Product from './Components/Product/Product';
 import { fetchCartData } from './Store/product-slice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { Route, Switch } from 'react-router-dom';
+
+
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,8 +22,8 @@ const App = () => {
   return (
     <div >
       <Layout>
-        <FilterArea />
-        <Product />
+          <FilterArea />
+          <Product />
       </Layout>
     </div>
   );
