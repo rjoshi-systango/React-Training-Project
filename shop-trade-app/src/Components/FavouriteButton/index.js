@@ -5,21 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
 
-import { useState } from 'react';
+// import { useState } from 'react';
 
 const FavouriteButton = (props) => {
-    const [isFavourite, setIsFavourite] = useState(false);
+    // const [isFavourite, setIsFavourite] = useState(false);
     const dispatch = useDispatch();
-
+    
     const favouriteClickHandler = () => {
-        dispatch(addFavourite(props.id));
+        // dispatch(addFavourite(props.id));
         console.log(props.id);
-        setIsFavourite((prevState) => !prevState);
+        dispatch(addFavourite(props.id));
     }
 
     return (
         <div onClick={favouriteClickHandler}>
-           <FontAwesomeIcon icon={isFavourite ? faHeart : faHeartEmpty} />
+           <FontAwesomeIcon icon={props.isFavourite ? faHeart : faHeartEmpty} />
         </div>
     )
 }
