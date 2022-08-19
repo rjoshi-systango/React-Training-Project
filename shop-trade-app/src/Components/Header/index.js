@@ -2,7 +2,7 @@ import classes from "./index.module.css";
 import logo from "../../Assests/img/systango_logo.jpeg";
 import { useDispatch, useSelector } from 'react-redux';
 import { productDataActions } from "../../Store/product-slice";
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from "react-router-dom"; 
 
@@ -34,11 +34,15 @@ const Header = () => {
                 <input type="text" className={classes.header_left_content} placeholder="search" onChange={searchInputChangeHandler}/>
                 <Link to="/favourite">
                     <p className={classes.header_left_content} >
-                        <FontAwesomeIcon icon={faHeart} />{favouriteProduct.length}
+                        <FontAwesomeIcon icon={faHeart} /><sup>{favouriteProduct.length}    </sup>
                     </p>
                 </Link>
-                <p className={classes.header_left_content}>Profile</p>
-                <p className={classes.header_left_content}>Cart</p>
+                <p className={classes.header_left_content}>
+                    <FontAwesomeIcon icon={faUser} />
+                </p>
+                <p className={classes.header_left_content}>
+                <FontAwesomeIcon icon={faShoppingCart} />
+                </p>
             </div>
         </header>
     )

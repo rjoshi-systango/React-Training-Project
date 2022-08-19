@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     productList: [],
     filteredProductList: [],
-    favouriteProductList: []
+    favouriteProductList: [],
+    isFavourite: false
 }
 
 const productDataSlice = createSlice({
@@ -13,6 +14,9 @@ const productDataSlice = createSlice({
         addProduct(state, action) {
             state.productList.push(...action.payload.productList);
             state.filteredProductList.push(...action.payload.productList);
+        },
+        addFavouriteProduct(state, action){
+            state.favouriteProductList.push(...action.payload.favouriteProductList);
         },
         filterProduct(state, action) {
             let selectedCategory = action.payload.category;
@@ -24,20 +28,22 @@ const productDataSlice = createSlice({
                 state.filteredProductList = state.productList.filter(item => item.tag === selectedCategory);
             }
         },
-        filterProductByPrice(state, action) {
-            const productsList = action.payload.productsList;
-            console.log(productsList);
+        addFavouriteItem(state, action){
+            state.favouriteProductList.push(action.payload.productId);
         },
-        searchProduct(state, action) {
-            let searchData = action.payload.enteredSearchInput;
-            state.filteredProductList = state.productList.filter((product) => {
-                return product.name.includes(searchData) || product.vendor.includes(searchData) || product.tag.includes(searchData);
-            });
+        removeFavouriteItem(state, action){
+            state.favouriteProductList = state.favouriteProductList.filter((id) => {
+                id = parseInt(id) 
+                action.payload.productId = parseInt(action.payload.productId);
+
+                return id!==action.payload.productId;
+            })
         },
-        addFavouriteItem(state, action) {
-            const favouriteList = action.payload.favouriteList;
-            state.favouriteProductList.push(...favouriteList);
-        }
+        changeState(state, action) {
+            state.isFavourite = action.payload.isFavourite;
+        },
+        
+    
     }
 });
 
@@ -75,6 +81,41 @@ export const fetchCartData = () => {
     }
 }
 
+
+export const fetchFavouriteData = () => {
+    return async (dispatch) => {
+        const fetchData = async () => {
+            const response = await fetch("https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail.json");
+            if (!response.ok) {
+                throw new Error("Not able to fetch data");
+            }
+
+            const data = await response.json();
+            return data;
+        }
+
+        try {
+            const productList = await fetchData();
+            let transformedProductList = [];
+
+            for (let key in productList) {
+                if(productList[key] !== null) {
+                    transformedProductList.push(key);
+                }
+            }
+            dispatch(
+                productDataActions.addFavouriteProduct({
+                    favouriteProductList: transformedProductList
+                })
+            )
+        }
+        catch (error) {
+            console.log(error);
+        }
+
+    }
+}
+
 export const sorting = (sortOrder, filteredProductList) => {
     console.log(filteredProductList, sortOrder);
     return (dispatch) => {
@@ -86,107 +127,42 @@ export const sorting = (sortOrder, filteredProductList) => {
     }
 }
 
-// //Delete item from favourite list 
-// export const removeFavourite = (productId) => {
-//     return async () => {
-//         const deleteFavouriteId = async () => {
-//             const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail/${productId}.json`, {
-//                 method: 'DELETE'
-//             })
-//             if (!response.ok) {
-//                 throw new Error('Failed to remove favourite product');
-//             }
-//             // const data = response.json();
-//             // return data;
-//         }
-//         try {
-//             const result = await deleteFavouriteId();
-//             console.log(result);
-//         }
-//         catch (error) {
-//             console.log(error);
-//         }
-//     }
-// }
-
-export const addFavourite = (productId) => {
+export const changeFavouriteState = (productId, request) => {
     return async(dispatch) => {
-        const sendData = async () => {
-
-            const response = await fetch("https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail.json", {
-                method: "POST",
-                body: JSON.stringify({ id: productId })
-            });
-            if (!response.ok) {
-                throw new Error(`failed to add favourite ${productId}`);
+        const httpReq = async() => {
+            let response;
+            if(request === 'POST') {
+                response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail/${productId}.json`, {
+                    method: request,
+                    body: JSON.stringify(true)
+                });
+            }
+            else if(request === 'DELETE') {
+                response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail/${productId}.json`, {
+                    method: request
+                });
+            }
+            if(!response.ok) {
+                throw new Error(`failed http '${request}' request`);
             }
             const data = await response.json();
             return data;
         }
-        try {
-            sendData();
-        }
-        catch (error) {
-            console.log(error);
-        }
+
+        try{
+            httpReq();
+        
+                if(request === 'POST') {
+                    dispatch(productDataActions.addFavouriteItem({ productId: productId }))
+                }
+                else if(request === 'DELETE') {
+                    dispatch(productDataActions.removeFavouriteItem({ productId: productId }))
+                }
+             }
+        
+        catch(error) {console.log(error);}
     }
 }
-
-
-export const fetchFavouriteDetail = () => {
-    return async (dispatch) => {
-        const fetchData = async () => {
-            const response = await fetch("https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail.json");
-            if (!response.ok) {
-                throw new Error("Failed to fetch favourite data");
-            }
-            const data = await response.json();
-            return data;
-        }
-        try {
-            const favouriteList = await fetchData();
-            let transformedFavouriteList = [];
-
-            for (let key in favouriteList) {
-
-                transformedFavouriteList.push(favouriteList[key]);
-            }
-            dispatch(
-                productDataActions.addFavouriteItem({ favouriteList: transformedFavouriteList })
-            )
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }
-}
-
-
-// export const addFavourite = (id) => {
-//     return async(dispatch) => {
-//         const sendData = async() => {
-
-//             const response = await fetch("https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail/-N9g2oaRQCUloGENg1ia/.json", {
-//                 method: "PUT",
-//                 body: JSON.stringify(id),
-//             })
-//             if (!response.ok) {
-//                 throw new Error("Failed to send data");
-//             }
-
-//             let data = await response.json();
-//             return data;
-//         }
-
-//         try{
-//             const data = await sendData();
-//             console.log(data);
-//         }
-//         catch {
-//             console.log("error");
-//         }
-//     }
-// }
 
 export const productDataActions = productDataSlice.actions;
 

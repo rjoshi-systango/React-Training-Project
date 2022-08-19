@@ -1,14 +1,13 @@
 import classes from "./PriceFilter.module.css";
-import { sorting } from "../../Store/product-slice";
 import { useDispatch, useSelector } from "react-redux";
 
 const PriceFilter = () => {
-    const filteredProductList = useSelector(state => state.filteredProductList);
-    const dispatch = useDispatch();
+    // const filteredProductList = useSelector(state => state.filteredProductList);
+    // const dispatch = useDispatch();
 
     const categoryChangeHandler = (event) => {
         console.log(event.target.value);
-        dispatch(sorting(event.target.value, filteredProductList))
+        // dispatch(sorting(event.target.value, filteredProductList))
             ;
     }
 

@@ -6,7 +6,6 @@ const ProductCard = (props) => {
     const [isCardHover, setIsCardHover]= useState(false);
     const productInformation = props.productInformation;
     const discountPercentage = 100 - ((productInformation.price * 100) / productInformation.compare_at_price);
-    let count = 0;
 
     const mouseOverHandler = () => {
         setIsCardHover(true);
@@ -16,11 +15,6 @@ const ProductCard = (props) => {
         setIsCardHover(false);
     }
     
-    props.favouriteProductId.forEach((productId) => {
-        if(props.productInformation.id === productId.id) {
-            count += 1;
-        }
-    })
 
     return (
         <div className={`${classes.product_card} col-12 col-sm-4 col-md-3 col-lg-2 px-2  `} onMouseLeave={mouseDownHandler} onMouseOver={mouseOverHandler}>
@@ -28,7 +22,7 @@ const ProductCard = (props) => {
                 <div className={classes.product_image_box_main}>
                     
                     <div className={classes.image_box}>
-                        {isCardHover && <FavouriteButton id={productInformation.id} isFavourite={count>0? true : false}/>}
+                        {isCardHover && <FavouriteButton id={productInformation.id}  />}
                         <img src={productInformation.image_src[0]} className='img-fluid' alt="lgo" />
                     </div>
                 </div>
