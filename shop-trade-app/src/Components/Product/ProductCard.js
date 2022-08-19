@@ -33,7 +33,7 @@ const ProductCard = (props) => {
                     <p className={`${classes.product_description} m-0`}>{productInformation.name}</p>
                     <p className={`${classes.product_price} m-0`}>${productInformation.price}
                         <strike className={classes.product_actual_price}>${productInformation.compare_at_price} </strike>
-                        <span className={classes.product_price_discount}>({discountPercentage}% OFF)</span>
+                        <span className={classes.product_price_discount}>({discountPercentage.toFixed(0)}% OFF)</span>
                     </p>
                 </div>
 

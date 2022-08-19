@@ -29,6 +29,12 @@ const productDataSlice = createSlice({
                 state.filteredProductList = state.productList.filter(item => item.tag === selectedCategory);
             }
         },
+        searchProduct(state, action){
+            let searchData = action.payload.enteredSearchInput;
+            state.filteredProductList = state.productList.filter((product) => {
+                return product.name.includes(searchData) || product.vendor.includes(searchData) || product.tag.includes(searchData);
+            });
+        },
         addFavouriteItem(state, action){
             state.favouriteProductList.push(action.payload.productId);
         },
