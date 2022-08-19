@@ -1,6 +1,7 @@
 import classes from './ProductCard.module.css';
 import FavouriteButton from '../FavouriteButton/index';
 import { useState } from 'react';
+import CartButton from '../CartButton/index';
 
 const ProductCard = (props) => {
     const [isCardHover, setIsCardHover]= useState(false);
@@ -23,6 +24,7 @@ const ProductCard = (props) => {
                     
                     <div className={classes.image_box}>
                         {isCardHover && <FavouriteButton id={productInformation.id}  />}
+                        {isCardHover && <CartButton id={productInformation.id}  />}
                         <img src={productInformation.image_src[0]} className='img-fluid' alt="lgo" />
                     </div>
                 </div>

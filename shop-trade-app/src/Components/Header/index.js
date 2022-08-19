@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
     const favouriteProduct = useSelector(state => state.favouriteProductList);
+    const cartProduct = useSelector(state => state.cartProductList);
 
     const dispatch = useDispatch();
 
@@ -34,15 +35,19 @@ const Header = () => {
                 <input type="text" className={classes.header_left_content} placeholder="search" onChange={searchInputChangeHandler}/>
                 <Link to="/favourite">
                     <p className={classes.header_left_content} >
-                        <FontAwesomeIcon icon={faHeart} /><sup>{favouriteProduct.length}    </sup>
+                        <FontAwesomeIcon icon={faHeart} />
+                        <sup>{favouriteProduct.length}</sup>
                     </p>
                 </Link>
                 <p className={classes.header_left_content}>
                     <FontAwesomeIcon icon={faUser} />
                 </p>
-                <p className={classes.header_left_content}>
-                <FontAwesomeIcon icon={faShoppingCart} />
-                </p>
+                <Link to='/cart' >
+                    <p className={classes.header_left_content}>
+                        <FontAwesomeIcon icon={faShoppingCart} />
+                        <sup>{cartProduct.length}</sup>
+                    </p>
+                </Link>
             </div>
         </header>
     )
