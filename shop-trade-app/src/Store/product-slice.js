@@ -4,7 +4,8 @@ const initialState = {
     productList: [],
     filteredProductList: [],
     favouriteProductList: [],
-    isFavourite: false
+    isFavourite: false,
+    cartProductList: [],
 }
 
 const productDataSlice = createSlice({
@@ -42,7 +43,29 @@ const productDataSlice = createSlice({
         changeState(state, action) {
             state.isFavourite = action.payload.isFavourite;
         },
-        
+        addToCart(state, action) {
+            const selectedProductId = action.payload.productId;
+            let isExistingId;
+            state.cartProductList.forEach((product) => {
+                if(product.id === selectedProductId) {
+                    console.log("MATCH");
+                    isExistingId = true;
+                }
+            });
+          
+            if(isExistingId) {
+                for(let index in state.cartProductList) {
+                    console.log(index);
+                    state.cartProductList[index].quantity +=1;
+                }
+                return;
+               
+            }
+            state.cartProductList.push({ 
+                id: action.payload.productId,
+                quantity: 1
+            });
+        }
     
     }
 });
