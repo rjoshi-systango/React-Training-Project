@@ -1,8 +1,7 @@
 import ProductCard from './ProductCard';
-import { useSelector } from 'react-redux';
 
-const Product = () => {
-  const filteredProductList = useSelector(state => state.filteredProductList);
+const Product = (props) => {
+  const filteredProductList = props.filteredProductList;
 
     return (
       <div className=" container-fluid d-flex flex-wrap">

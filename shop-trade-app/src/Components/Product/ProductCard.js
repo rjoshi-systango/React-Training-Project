@@ -17,7 +17,7 @@ const ProductCard = (props) => {
     
 
     return (
-        <div className={`${classes.product_card} col-12 col-sm-4 col-md-3 col-lg-2 px-2  `} onMouseLeave={mouseDownHandler} onMouseOver={mouseOverHandler}>
+        <div className={`${classes.product_card} col-12 col-sm-4 col-md-3 col-lg-2 px-2 `} onMouseLeave={mouseDownHandler} onMouseOver={mouseOverHandler}>
             <div className={classes.product_card_inner}>
                 <div className={classes.product_image_box_main}>
                     
