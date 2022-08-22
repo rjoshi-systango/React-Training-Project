@@ -44,7 +44,7 @@ const ProductCard = (props) => {
     }
 
     return (
-        <div className={`${classes.product_card} card col-12 col-sm-4 col-md-3 col-lg-2 px-2 gy-4`}
+        <div className={`${classes.product_card}  col-12 col-sm-4 col-md-3 col-lg-2 px-2 h-100 mx-lg-3 mx-md-4 mx-sm-4 gy-4`}
             onMouseLeave={mouseDownHandler}
             onMouseOver={mouseOverHandler}
             onClick={productClickedHandler}
@@ -62,21 +62,12 @@ const ProductCard = (props) => {
                         <button onClick={addToCartClickHandler} className={`${classes.cart_button}`} > ADD TO CART</button>
                     </div>
                 }
-                {isProductClicked && !isAddToCartClicked  &&
-                    <div className='' style={{ display: "flex", flexDirection: "row" }}>
-                        {productInformation.options.map((product) => 
-                            <p key={`${product.id} ${product.sizeId}`}>{product.value}</p>
-                        )}
-                        <span> </span>
-                        
-                    </div>
-                }
                 {isAddToCartClicked &&
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                        <label> Sizes : </label>
+                    <div className='col d-flex' >
+                        <h6 className='row' >Select size</h6>
                         {
                             productInformation.options.map((product) => {
-                                return <div key={`${product.id} ${product.sizeId}`} onClick={clickHandler} id={product.id}>{product.value}</div>
+                                return <div className={` ${classes.size_option} rounded-circle col-auto px-2 `} key={`${product.id} ${product.sizeId}`} onClick={clickHandler} id={product.id}>{product.value}</div>
                             })
                         }
                     </div>
