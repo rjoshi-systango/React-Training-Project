@@ -38,32 +38,11 @@
     transform: scale(1.05);
 }
 
-.product_brand_name {
-    color: black;
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.product_description {
-    color: grey;
-    font-size: 12px;
-}
-
-.product_price {
-    color: black;
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.product_actual_price {
-    color: grey;
-    font-weight: 400
-}
-
-.product_price_discount {
-    color: lightcoral;
-    font-style: italic;
+.cart_button {
+    border : 1px solid black;
     font-weight: 400;
+    border-color: grey;
+    background-color: white;
+    margin: 5px;
+    width: 100%;
 }
-
-

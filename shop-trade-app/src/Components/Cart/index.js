@@ -1,13 +1,13 @@
 import CartItem from './CartItem';
 import classes from './index.module.css';
-const DUMMY_DATA = [1,2,3,4,5];
+// const DUMMY_DATA = [1,2,3,4,5];
 
-const Cart = () => {
-
+const Cart = (props) => {
+    const { productList } = props;
     const cartItems = (
         <ul className={classes['cart-items']}>
-            {DUMMY_DATA.map((item) => (
-                <CartItem key={Math.random()}/>
+            {productList.map((product) => (
+                <CartItem key={`${product.id} ${product.sizeId}`} productList={productList}/>
             ))}
         </ul>
     );

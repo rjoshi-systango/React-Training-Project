@@ -36,6 +36,7 @@ const productDataSlice = createSlice({
             });
         },
         addFavouriteItem(state, action){
+            // console.log(action.payload);
             state.favouriteProductList.push(action.payload.productId);
         },
         removeFavouriteItem(state, action){
@@ -49,26 +50,33 @@ const productDataSlice = createSlice({
         changeState(state, action) {
             state.isFavourite = action.payload.isFavourite;
         },
+        addCartItem(state, action){
+            state.cartProductList.push(...action.payload.cartProductList);
+        },
         addToCart(state, action) {
             const selectedProductId = action.payload.productId;
+            const selectedProductSizeId = action.payload.sizeId;
+            // console.log(selectedProductId);
+            const { productInformation } = action.payload;
             let isExistingId;
             state.cartProductList.forEach((product) => {
-                if(product.id === selectedProductId) {
-                    console.log("MATCH");
+                // console.log(product);
+                if(product.id === productInformation.id && product.sizeId === productInformation.sizeId) {
+                    // console.log("MATCH");
                     isExistingId = true;
                 }
             });
-          
             if(isExistingId) {
                 for(let index in state.cartProductList) {
-                    console.log(index);
+                    // console.log(index);
                     state.cartProductList[index].quantity +=1;
                 }
                 return;
                
             }
             state.cartProductList.push({ 
-                id: action.payload.productId,
+                id: selectedProductId,
+                sizeId: selectedProductSizeId,
                 quantity: 1
             });
         }
@@ -190,6 +198,56 @@ export const changeFavouriteState = (productId, request) => {
              }
         
         catch(error) {console.log(error);}
+    }
+}
+
+export const fetchCartProductList = () => {
+    return async(dispatch) => {
+        const fetchData = async() => {
+            const response = await fetch('https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail.json')
+            if(!response.ok) {
+                throw new Error("Failed to fetch cart product list");
+            }
+            const data = await response.json();
+            return data;
+        }
+
+        try{
+            const cartProductList = await fetchData();
+            console.log(cartProductList);
+            // dispatch(
+            //     productDataActions.addCartItem({
+            //         cartProductList: cartProductList
+            //         })
+            //     )
+
+        } catch(error) {
+            console.log(error);
+        }
+    }
+}
+
+
+export const addToCartDB = (productInformation) => {
+    return async(dispatch) => {
+        const sendData = async() => {
+            const response = await fetch('https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail.json', {
+                method: 'POST',
+                body: JSON.stringify(productInformation)
+            })
+            if(!response.ok) {
+                throw new Error("failed to send user cart data");
+            }
+            const data = response.json();
+            return data;
+        }
+        try{
+            await sendData();
+            dispatch(productDataActions.addToCart({productInformation}));
+        }catch(error){
+            console.log(error);
+        }
+
     }
 }
 
