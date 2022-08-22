@@ -1,5 +1,5 @@
 import './App.css';
-import { fetchCartData, fetchFavouriteData } from './Store/product-slice';
+import { fetchCartData, fetchFavouriteData, fetchCartProductList } from './Store/product-slice';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -19,7 +19,9 @@ const App = () => {
 
     dispatch(fetchCartData());
     dispatch(fetchFavouriteData());
+    dispatch(fetchCartProductList());
   }, [dispatch]);
+
 
   return (
     <div>

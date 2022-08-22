@@ -1,0 +1,11 @@
+.product_card{
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1), 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+
+  .product_card:hover{
+    transition: 0.25s ease-in-out;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2), 0px 6px 20px 0px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+
+  }

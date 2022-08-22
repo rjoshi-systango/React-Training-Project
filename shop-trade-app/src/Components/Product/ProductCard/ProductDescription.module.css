@@ -1,0 +1,11 @@
+
+.product_brand_name {
+    color: black;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.product_description {
+    color: grey;
+    font-size: 12px;
+}
