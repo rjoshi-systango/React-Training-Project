@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 const ProductCard = (props) => {
     const [isCardHover, setIsCardHover] = useState(false);
     const [isProductClicked, setIsProductClicked] = useState(false);
+    const [isSizeSelected, setIsSizeSelected] = useState(false);
     const [isAddToCartClicked, setIsAddToCartClicked] = useState(false);
     // const cartProductList = useSelector(state => state.cartProductList);
     const productInformation = props.productInformation;
@@ -32,16 +33,20 @@ const ProductCard = (props) => {
         setIsAddToCartClicked(true);
     }
 
-    const clickHandler = (event) => {
-        const sizeId = event.currentTarget.id;
-
-        const transformedData = {
-            sizeId, ...productInformation
-        }
-
-        dispatch(addToCartDB(transformedData));
-        setIsAddToCartClicked(false);
+    const sizeClickHandler = () => {
+        setIsAddToCartClicked(true);
     }
+    // const clickHandler = (event) => {
+    //     const sizeId = event.currentTarget.id;
+
+    //     const transformedData = {
+    //         sizeId, ...productInformation
+    //     }
+
+    //     dispatch(addToCartDB(transformedData));
+    //     setIsAddToCartClicked(false);
+    // }
+
 
     return (
         <div className={`${classes.product_card}  col-12 col-sm-4 col-md-3 col-lg-2 px-2 h-100 mx-lg-3 mx-md-4 mx-sm-4 gy-4`}
@@ -57,19 +62,20 @@ const ProductCard = (props) => {
                         <img src={productInformation.image_src[0]} className='img-fluid card-img-top' alt="lgo" />
                     </div>
                 </div>
-                {isProductClicked && !isAddToCartClicked &&
-                    <div className={`${classes.cartButton} `}>
-                        <button onClick={addToCartClickHandler} className={`${classes.cart_button}`} > ADD TO CART</button>
-                    </div>
-                }
-                {isAddToCartClicked &&
-                    <div className='col d-flex' >
-                        <h6 className='row' >Select size</h6>
+               
+                {isProductClicked &&
+                    <div className='col d-flex flex-wrap' >
+                        <h6 className='row w-100' >Select size</h6>
                         {
                             productInformation.options.map((product) => {
-                                return <div className={` ${classes.size_option} rounded-circle col-auto px-2 `} key={`${product.id} ${product.sizeId}`} onClick={clickHandler} id={product.id}>{product.value}</div>
+                                return <div className={` ${classes.size_option}  col-auto mx-1 `} key={`${product.id} ${product.sizeId}`} onClick={sizeClickHandler} id={product.id}>{product.value}</div>
                             })
                         }
+                    </div>
+                }
+                 { isSizeSelected &&
+                    <div className={`${classes.cartButton} `}>
+                        <button onClick={addToCartClickHandler} className={`${classes.cart_button}`} > ADD TO CART</button>
                     </div>
                 }
 
