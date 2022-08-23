@@ -37,20 +37,23 @@ const ProductCard = (props) => {
     }
 
     const addToCartClickHandler = () => {
-        // console.log(cartProductList);
+        console.log(cartProductList);
         // console.log(selectedSize);
         
         let existingProduct = false;
 
         cartProductList.forEach((product) => {
+            
             if (product.id === productInformation.id && product.sizeId === selectedSize) {
                 existingProduct = true;
                 let quantity = product.quantity + 1 
+                console.log("existing");
                 dispatch(updateProductQuanity(product.firebaseId, quantity ));
             }
         })
 
         if(!existingProduct) {
+            console.log("new");
             let transformedInformation = {};
             transformedInformation = {...productInformation, sizeId: selectedSize, quantity: 1}
             dispatch(addCartNewProduct(transformedInformation));
@@ -73,7 +76,7 @@ const ProductCard = (props) => {
                     </div>
                 </div>
 
-                {isProductClicked &&
+                {isProductClicked && !isSizeSelected &&
                     <div className='col d-flex flex-wrap' >
                         <h6 className={`${classes.size_seletbox} row w-100 m-0`}>Select size</h6>
                         {

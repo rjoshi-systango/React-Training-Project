@@ -7,8 +7,8 @@ import { Route, Switch } from 'react-router-dom';
 import HomePage from './Pages/HomePage';
 import Header from "./Components/Header/index";
 import CartPage from './Pages/CartPage';
-import Favourite from './Pages/Favourite';
 import Advertisment from "./Components/Advertisment";
+import FavouritePage from './Pages/FavouritePage';
 
 
 
@@ -36,7 +36,7 @@ const App = () => {
           <CartPage />
         </Route>
         <Route path="/favourite">
-          <Favourite />
+          <FavouritePage />
         </Route>
 
         <Route path="*">

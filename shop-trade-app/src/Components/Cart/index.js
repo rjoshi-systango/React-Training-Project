@@ -40,9 +40,9 @@ const priceReducer = (state, action) => {
 
 const Cart = (props) => {
     const { productList } = props;
-
+    // console.log(productList);
     const [totalPrice, dispatch] = useReducer(priceReducer, {total: 0, tax: 0, subTotal: 0});
-    console.log(totalPrice);
+    // console.log(totalPrice);
     // const [totalBill, setTotalBill] = useState(0);
     // const [subTotal, setSubTotal] = useState(0);
     // const [totalTax, setTotalTax] = useState(0);

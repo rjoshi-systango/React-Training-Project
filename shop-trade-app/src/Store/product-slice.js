@@ -294,9 +294,10 @@ export const addCartNewProduct = (productInformation) => {
             return data;
         }
         try{
-            await sendData();
-            dispatch(productDataActions.addToCart({productInformation}))
-
+            const result = await sendData();
+            console.log(result.name);
+            const tranformedData = {...productInformation, firebaseId: result.name};
+            dispatch(productDataActions.addToCart({ productInformation: tranformedData }))
         }catch(error){
             console.log(error);
         }
