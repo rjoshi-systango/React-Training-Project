@@ -3,6 +3,7 @@ import { changeFavouriteState } from '../../Store/product-slice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons';
+import classes from './index.module.css';
 
 const FavouriteButton = (props) => {
     const favouriteProductId = useSelector((state) => state.favouriteProductList);
@@ -24,7 +25,7 @@ const FavouriteButton = (props) => {
     }
 
     return (
-        <div onClick={favouriteClickHandler} >
+        <div onClick={favouriteClickHandler} className={`${classes.favourite_btn}`} >
            <FontAwesomeIcon className={`card-img-overlay`} icon={isFavourite.length > 0 ? faHeart : faHeartEmpty} />
         </div>
     )

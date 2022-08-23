@@ -36,7 +36,7 @@ const productDataSlice = createSlice({
             });
         },
         addFavouriteItem(state, action){
-            // console.log(action.payload);
+            // console.log(action.payload.cartProductList);
             state.favouriteProductList.push(action.payload.productId);
         },
         removeFavouriteItem(state, action){
@@ -51,34 +51,32 @@ const productDataSlice = createSlice({
             state.isFavourite = action.payload.isFavourite;
         },
         addCartItem(state, action){
+            // console.log(action.payload.cartProductList);
             state.cartProductList.push(...action.payload.cartProductList);
         },
         addToCart(state, action) {
-            const selectedProductId = action.payload.productId;
-            const selectedProductSizeId = action.payload.sizeId;
-            // console.log(selectedProductId);
-            const { productInformation } = action.payload;
-            let isExistingId;
+            const {productInformation } = action.payload;
+            state.cartProductList.push(productInformation);
+
+        }, 
+        updateQuantity(state, action) {
+            //change the quantity of product
+            const { firebaseId, quantity } = action.payload;
+            // console.log(firebaseId);
+            // console.log(quantity);
+            // console.log(state.cartProductList);
             state.cartProductList.forEach((product) => {
-                // console.log(product);
-                if(product.id === productInformation.id && product.sizeId === productInformation.sizeId) {
-                    // console.log("MATCH");
-                    isExistingId = true;
+                if(product.firebaseId === firebaseId) {
+                    product.quantity = quantity;
                 }
-            });
-            if(isExistingId) {
-                for(let index in state.cartProductList) {
-                    // console.log(index);
-                    state.cartProductList[index].quantity +=1;
-                }
-                return;
-               
-            }
-            state.cartProductList.push({ 
-                id: selectedProductId,
-                sizeId: selectedProductSizeId,
-                quantity: 1
-            });
+            })
+
+        },
+        removeCartProduct(state, action) {
+            const {firebaseId} = action.payload;
+            state.cartProductList = state.cartProductList.filter((product) => {
+                return product.firebaseId !== firebaseId ;
+            })
         }
     
     }
@@ -214,12 +212,19 @@ export const fetchCartProductList = () => {
 
         try{
             const cartProductList = await fetchData();
-            console.log(cartProductList);
-            // dispatch(
-            //     productDataActions.addCartItem({
-            //         cartProductList: cartProductList
-            //         })
-            //     )
+            // console.log(cartProductList);
+            let transformedCartProductList = [];
+            for(let index in cartProductList) {
+                // console.log(cartProductList[index]);
+                transformedCartProductList.push({ ...cartProductList[index], firebaseId: index});
+
+            }
+            // console.log(transformedCartProductList);
+            dispatch(
+                productDataActions.addCartItem({
+                    cartProductList: transformedCartProductList
+                    })
+                )
 
         } catch(error) {
             console.log(error);
@@ -248,6 +253,79 @@ export const addToCartDB = (productInformation) => {
             console.log(error);
         }
 
+    }
+}
+
+export const deleteCartProduct = (firebaseId) => {
+    return async(dispatch) => {
+        const deleteData = async() => {
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail/${firebaseId}.json`, {
+                method: "DELETE"
+            })
+            if(!response.ok) {
+                throw new Error("failed to delete product from cart");
+            }
+            const data = await response.json();
+            return data;
+        }
+        try{
+            await deleteData();
+            dispatch(productDataActions.removeCartProduct({
+                firebaseId
+            }))
+
+        }catch(error){
+
+        }
+    }
+}
+
+export const addCartNewProduct = (productInformation) => {
+    return async(dispatch) => {
+        const sendData = async() => {
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail.json`, {
+                method: "POST",
+                body: JSON.stringify(productInformation)
+            });
+            if(!response.ok) {
+                throw new Error("failed to send new cart product data");
+            }
+            const data = response.json();
+            return data;
+        }
+        try{
+            await sendData();
+            dispatch(productDataActions.addToCart({productInformation}))
+
+        }catch(error){
+            console.log(error);
+        }
+    }
+}
+
+export const updateProductQuanity = (firebaseId, quantity) => {
+    return async(dispatch) => {
+        const updateData = async() => {
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail/${firebaseId}.json`,{
+                method: "PATCH",
+                body: JSON.stringify({quantity})
+
+            });
+            if(!response.ok) {
+                throw new Error(`failed to update cart data quantity`);
+            }
+            const data = response.json();
+            return data;
+        }
+        try{
+            await updateData();
+            // console.log(result);
+            dispatch(productDataActions.updateQuantity({firebaseId, quantity}));
+            
+
+        } catch(error){
+            console.log(error);
+        }
     }
 }
 

@@ -53,5 +53,41 @@
     display: flex;
     align-items: center;
     opacity: 0.75;
+    
 
 }
+
+.size_selet_box{
+    height: 30px;
+    overflow-y: auto;
+    -ms-overflow-style: none;  
+      scrollbar-width: none;  
+}
+
+.size_selet_box::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* .size_select_buttons{
+    background-color: rgba(255, 255, 255, 1.0);
+    font-size: 16px;
+    font-weight: 600;
+    height: 28px;
+    border: 1px solid black;
+    border-radius: 28px;
+    margin: 2px;
+    padding: 2px;
+    text-align: center;
+    display: inline-flex;
+    line-height: 1.2;
+}
+
+.size_select_buttons:hover{
+    transition: 0.2s;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: rgba(255, 255, 255, 1.0);
+    font-weight: 800;
+    border: 1px solid black;
+    transform: scale(1.001);
+} */
