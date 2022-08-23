@@ -48,7 +48,10 @@
 }
 
 .size_option {
-    border: 1px solid black;
-    margin: auto;
-    border-radius: 50% 50%;
+    margin: 3px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    opacity: 0.75;
+
 }
