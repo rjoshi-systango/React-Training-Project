@@ -1,7 +1,7 @@
-import Product from "../Components/Product";
 import { useSelector } from 'react-redux';
+import Favourite from "../Components/Favourite";
 
-const Favourite = () => {
+const FavouritePage = () => {
     const filteredProductList = useSelector(state => state.filteredProductList);
     const favouriteProductId = useSelector(state => state.favouriteProductList);
 
@@ -16,12 +16,13 @@ const Favourite = () => {
             }
         } )
     })
-    
+    console.log(favouriteProductId);
     return (
         <div>
-            <Product filteredProductList={favouriteProductList}  />   
+            <Favourite productList={favouriteProductList}/>
+            {/* <Product filteredProductList={favouriteProductList}  />    */}
         </div>
     );
 }   
 
-export default Favourite;
+export default FavouritePage;

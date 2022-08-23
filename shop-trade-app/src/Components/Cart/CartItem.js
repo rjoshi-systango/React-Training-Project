@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 const CartItem = (props) => {
   const { productInformation } = props;
+  // console.log(productInformation);
   let isQuantityOne = productInformation.quantity === 1;
   const [isCheckboxClicked, setIsCheckboxClicked] = useState(false);
   const dispatch = useDispatch();
@@ -27,6 +28,8 @@ const CartItem = (props) => {
   }
   
   const deleteClickHandler = () => {
+    console.log(productInformation);
+    console.log(productInformation.firebaseId);
     dispatch(deleteCartProduct(productInformation.firebaseId));
     const totalPrice = productInformation.price * productInformation.quantity;
     if(isCheckboxClicked) {
