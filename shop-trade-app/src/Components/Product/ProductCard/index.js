@@ -3,17 +3,18 @@ import classes from './index.module.css';
 import FavouriteButton from '../../FavouriteButton/index';
 import ProductDescription from './ProductDescription';
 import ProductPrice from './ProductPrice';
-import { addToCartDB } from '../../../Store/product-slice';
-import { useDispatch } from 'react-redux';
+// import { addToCartDB } from '../../../Store/product-slice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addCartNewProduct, updateProductQuanity } from '../../../Store/product-slice';
 // import CartButton from '../../CartButton/index';
 
 const ProductCard = (props) => {
-    const [isCardHover, setIsCardHover] = useState(false);
-    const [isProductClicked, setIsProductClicked] = useState(false);
-    const [isSizeSelected, setIsSizeSelected] = useState(false);
-    const [isAddToCartClicked, setIsAddToCartClicked] = useState(false);
-    // const cartProductList = useSelector(state => state.cartProductList);
     const productInformation = props.productInformation;
+    const [isCardHover, setIsCardHover] = useState(false);
+    const [isProductClicked, setIsProductClicked] = useState();
+    const [isSizeSelected, setIsSizeSelected] = useState(false);
+    const [selectedSize, setSelectedSize] = useState();;
+    const cartProductList = useSelector(state => state.cartProductList);
     const dispatch = useDispatch();
 
     const mouseOverHandler = () => {
@@ -24,29 +25,38 @@ const ProductCard = (props) => {
         setIsCardHover(false);
     }
 
-    const productClickedHandler = (event) => {
+    const productClickedHandler = () => {
         setIsProductClicked(true);
     }
 
+    const sizeClickHandler = (event) => {
+        // console.log(event.currentTarget.id);
+        setSelectedSize(event.currentTarget.id);
+        setIsSizeSelected(true);
+        setIsProductClicked(false)
+    }
+
     const addToCartClickHandler = () => {
-        setIsProductClicked(false);
-        setIsAddToCartClicked(true);
+        // console.log(cartProductList);
+        // console.log(selectedSize);
+        
+        let existingProduct = false;
+
+        cartProductList.forEach((product) => {
+            if (product.id === productInformation.id && product.sizeId === selectedSize) {
+                existingProduct = true;
+                let quantity = product.quantity + 1 
+                dispatch(updateProductQuanity(product.firebaseId, quantity ));
+            }
+        })
+
+        if(!existingProduct) {
+            let transformedInformation = {};
+            transformedInformation = {...productInformation, sizeId: selectedSize, quantity: 1}
+            dispatch(addCartNewProduct(transformedInformation));
+        }
+
     }
-
-    const sizeClickHandler = () => {
-        setIsAddToCartClicked(true);
-    }
-    // const clickHandler = (event) => {
-    //     const sizeId = event.currentTarget.id;
-
-    //     const transformedData = {
-    //         sizeId, ...productInformation
-    //     }
-
-    //     dispatch(addToCartDB(transformedData));
-    //     setIsAddToCartClicked(false);
-    // }
-
 
     return (
         <div className={`${classes.product_card}  col-12 col-sm-4 col-md-3 col-lg-2 px-2 h-100 mx-lg-3 mx-md-4 mx-sm-4 gy-4`}
@@ -62,20 +72,29 @@ const ProductCard = (props) => {
                         <img src={productInformation.image_src[0]} className='img-fluid card-img-top' alt="lgo" />
                     </div>
                 </div>
-               
+
                 {isProductClicked &&
                     <div className='col d-flex flex-wrap' >
-                        <h6 className='row w-100' >Select size</h6>
+                        <h6 className={`${classes.size_seletbox} row w-100 m-0`}>Select size</h6>
                         {
                             productInformation.options.map((product) => {
-                                return <div className={` ${classes.size_option}  col-auto mx-1 `} key={`${product.id} ${product.sizeId}`} onClick={sizeClickHandler} id={product.id}>{product.value}</div>
+                                return <div onClick={sizeClickHandler}
+                                    
+                                    className={` ${classes.size_option} col-auto mx-1 `}
+                                    key={`${product.id} ${product.sizeId}`}
+                                    id={product.id}>
+                                    {product.value}
+                                </div>
                             })
                         }
                     </div>
                 }
-                 { isSizeSelected &&
+                {isSizeSelected &&
                     <div className={`${classes.cartButton} `}>
-                        <button onClick={addToCartClickHandler} className={`${classes.cart_button}`} > ADD TO CART</button>
+                        <button onClick={addToCartClickHandler}
+                            className={`${classes.cart_button}`} >
+                            ADD TO CART
+                        </button>
                     </div>
                 }
 
