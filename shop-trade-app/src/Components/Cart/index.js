@@ -80,7 +80,7 @@ const Cart = (props) => {
                                         <th scope="col">Select  </th>
                                         <th scope="col">Brand</th>
                                         <th scope="col">Quantity</th>
-                                        <th scope="col">Price</th>
+                                        <th scope="col">Price ($)</th>
                                     </tr>
                                 </thead>
                                 {/* {tbody} */}

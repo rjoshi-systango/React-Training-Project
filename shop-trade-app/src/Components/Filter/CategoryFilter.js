@@ -33,7 +33,7 @@ const CategoryFilter = () => {
                 <p className={classes.filter_heading}>FILTERS :</p>
                 {categoryContainer.map((item) => (
                     <div key={item}>
-                        <button className={classes.categoryBtn} value={item} onClick={filterClickHandler} >{item}</button>
+                        <button className={`${classes.categoryBtn}`} value={item} onClick={filterClickHandler} >{item}</button>
                     </div>
                 ))}
             </div>
