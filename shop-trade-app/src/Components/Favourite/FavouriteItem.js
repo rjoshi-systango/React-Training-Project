@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import FavouriteButton from "../FavouriteButton";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -5,12 +6,25 @@ import { changeFavouriteState } from "../../Store/product-slice";
 import { useDispatch } from "react-redux";
 
 const FavouriteItem = (props) => {
-    const { productInformation } = props;
+    const { productInformation, calculateTotalPrice } = props;
+    let { price } = productInformation;
     const dispatch = useDispatch();
+    const [isCheckboxClicked, setIsCheckboxClicked] = useState(false);
 
     const deleteClickHandler = () => {
-
+        if(isCheckboxClicked) {
+          price = parseInt(price);
+          calculateTotalPrice("SUB", price);
+        }
         dispatch(changeFavouriteState(productInformation.id, 'DELETE'));
+    }
+
+    const checkBoxChangeHandler = (event) => {
+      setIsCheckboxClicked(state => !state)
+      const checked = event.target.checked;
+      price = parseInt(price);
+      calculateTotalPrice(checked, price);
+
     }
     return  (
         <tbody>
@@ -26,7 +40,7 @@ const FavouriteItem = (props) => {
           </div>
         </th>
         <td className="align-middle">
-          <input type="checkbox" className="mb-0" style={{ fontWeight: "500" }} />
+          <input type="checkbox" className="mb-0" style={{ fontWeight: "500" }} onChange={checkBoxChangeHandler}/>
         </td>
         <td className="align-middle">
           <p className="mb-0" style={{ fontWeight: "500" }}>{productInformation.vendor}</p>

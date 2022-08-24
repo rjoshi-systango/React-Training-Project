@@ -1,7 +1,53 @@
 import FavouriteItem from "./FavouriteItem";
+import { useReducer } from "react";
+
+const priceReducer = (state, action) => {
+    if(action.type === true) {
+        return { 
+            subTotal : state.subTotal +  action.productTotalPrice, 
+            tax: state.tax +  (action.productTotalPrice * 5) / 100, 
+            total: state.total + (action.productTotalPrice + (action.productTotalPrice * 5) / 100)
+         }
+    }
+    if(action.type === false) {
+        return { 
+            subTotal : state.subTotal -  action.productTotalPrice, 
+            tax: state.tax -  (action.productTotalPrice * 5) / 100, 
+            total: state.total - (action.productTotalPrice + (action.productTotalPrice * 5) / 100)
+         }
+    }
+    if(action.type === "ADD") {
+        const productPrice = parseInt(action.productTotalPrice);
+        console.log(typeof(productPrice));
+
+        return { 
+            subTotal : state.subTotal +  productPrice, 
+            tax: state.tax +  (productPrice * 5) / 100, 
+            total: state.total + (productPrice + (productPrice * 5) / 100)
+         }
+    }
+    if(action.type === "SUB") {
+        const productPrice = parseInt(action.productTotalPrice);
+        console.log(typeof(productPrice));
+        return { 
+            subTotal : state.subTotal -  productPrice, 
+            tax: state.tax -  (productPrice * 5) / 100, 
+            total: state.total - (productPrice + (productPrice * 5) / 100)
+         }
+    }
+
+}
+
+
 
 const Favourite = (props) => {
     const { productList } = props;
+    const [totalPrice, dispatch] = useReducer(priceReducer, {total: 0, tax: 0, subTotal: 0});
+    const calculateTotalPrice = (checkbox, productTotalPrice) => {
+        dispatch({type: checkbox, productTotalPrice});
+ 
+}
+
     return (
         <section className="h-100 h-custom">
             <div className="container h-100 py-5">
@@ -19,7 +65,7 @@ const Favourite = (props) => {
                                         <th scope="col">Select  </th>
                                         <th scope="col">Brand</th>
                                         <th scope="col">Favourite</th>
-                                        <th scope="col">Price</th>
+                                        <th scope="col">Price ($)</th>
                                     </tr>
                                 </thead>
                                 {/* {tbody} */}
@@ -28,7 +74,7 @@ const Favourite = (props) => {
                                     productList.map((product) => (
 
                                         <FavouriteItem key={`${product.id} ${product.sizeId}`}
-                                            productInformation={product}
+                                            productInformation={product} calculateTotalPrice={calculateTotalPrice}
                                             
                                         />
                                     ))
@@ -47,7 +93,7 @@ const Favourite = (props) => {
                                     <div className="col-lg-4 col-xl-3">
                                         <div className="d-flex justify-content-between" style={{ fontWeight: "500" }}>
                                             <p className="mb-2">Subtotal</p>
-                                            <p className="mb-2">${"totalPrice.subTotal"}</p>
+                                            <p className="mb-2">${totalPrice.subTotal}</p>
                                         </div>
 
 
@@ -56,13 +102,13 @@ const Favourite = (props) => {
 
                                         <div className="d-flex justify-content-between mb-4" style={{ fontWeight: "500" }}>
                                             <p className="mb-2">Total (tax included)</p>
-                                            <p className="mb-2">${"totalPrice.tax"}</p>
+                                            <p className="mb-2">${totalPrice.tax}</p>
                                         </div>
 
                                         <button type="button" className="btn btn-primary btn-block btn-lg">
                                             <div className="d-flex justify-content-between">
                                                 <span>Checkout</span>
-                                                <span className="px-2"> ${"totalPrice.total"}</span>
+                                                <span className="px-2"> ${totalPrice.total}</span>
                                             </div>
                                         </button>
 
