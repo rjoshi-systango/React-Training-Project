@@ -29,7 +29,8 @@ const CategoryFilter = () => {
 
     return (
         <div className={`${classes.filter_option} flex-column flex-md-row `}>
-            <div className="container-fluid d-flex ">
+
+            <div className="container-fluid d-flex  ">
                 <div className='d-flex flex-wrap'>
                 <p className={` ${classes.filter_heading} m-0 align-self-center`}>FILTERS :</p>
 
