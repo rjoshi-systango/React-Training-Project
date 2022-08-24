@@ -1,16 +1,23 @@
 .button {
 
-    border: 1px solid black;
+    /* border: 1px solid black;
     border-radius: 2rem;
     padding: 10px;
     margin-bottom: 5px;
     padding: auto;
     color: black;
-    background-color: white;
+    background-color: white; */
 
+    border: 1px solid grey;
+    border-radius: 2rem;
+    padding: 5px 15px 5px 15px;
+    background-color: white;
+    margin: 5px;
+    color: grey;
 }
 
 
 .select_option {
     border: none;
+    background-color: white;
 }
