@@ -77,7 +77,8 @@ const Cart = (props) => {
                                 <thead>
                                     <tr>
                                         <th scope="col" className="h5">Systango Shopping Bag</th>
-                                        <th scope="col">Select  </th>
+                                        <th scope="col">  
+                                            <input type="checkbox"/> Select</th>
                                         <th scope="col">Brand</th>
                                         <th scope="col">Quantity</th>
                                         <th scope="col">Price ($)</th>

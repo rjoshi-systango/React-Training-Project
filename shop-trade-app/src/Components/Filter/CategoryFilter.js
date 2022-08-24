@@ -28,14 +28,17 @@ const CategoryFilter = () => {
     }
 
     return (
-        <div className={classes.filter_option}>
-            <div className="container-fluid d-flex">
-                <p className={classes.filter_heading}>FILTERS :</p>
+        <div className={`${classes.filter_option} flex-column flex-md-row `}>
+            <div className="container-fluid d-flex align-items-center">
+                <div className='d-flex flex-wrap'>
+                <p className={` ${classes.filter_heading} m-0`}>FILTERS :</p>
+
                 {categoryContainer.map((item) => (
                     <div key={item}>
                         <button className={`${classes.categoryBtn}`} value={item} onClick={filterClickHandler} >{item}</button>
                     </div>
                 ))}
+                </div>
             </div>
         </div>
     )

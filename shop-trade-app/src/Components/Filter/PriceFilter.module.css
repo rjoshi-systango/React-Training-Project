@@ -18,6 +18,11 @@
 
 
 .select_option {
-    border: none;
+    border: 0px solid transparent;
     background-color: white;
 }
+/* 
+.select_option:focus {
+    border: 0px solid transparent;
+    background-color: white;
+} */

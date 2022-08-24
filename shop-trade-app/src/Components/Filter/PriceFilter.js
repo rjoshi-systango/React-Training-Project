@@ -23,7 +23,7 @@ const PriceFilter = () => {
         <div className={"classes.price_filter"}>
             <button className={classes.button}>Sort By : 
                 <select name="" id="" className={classes.select_option} onChange={categoryChangeHandler}>
-                    <option value="">Select </option>
+                    <option value style={{textAlign: "center"}}> Price filters  </option>
                     <option value="low-to-high">Price Low To High</option>
                     <option value="high-to-low">Price High To Low</option>
                 </select>

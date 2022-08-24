@@ -59,7 +59,7 @@ const Header = () => {
 
 
 
-                        <div className="navbar-nav">
+                        <div className="navbar-nav align-items-center">
                             <div>
                                 {!isSearchIconClicked &&
                                     <div className={`${classes.icon} me-3`}>

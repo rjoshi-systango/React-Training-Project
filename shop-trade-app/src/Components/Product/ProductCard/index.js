@@ -16,7 +16,6 @@ const ProductCard = (props) => {
     const [selectedSize, setSelectedSize] = useState();;
     const cartProductList = useSelector(state => state.cartProductList);
     const dispatch = useDispatch();
-
     const mouseOverHandler = () => {
         setIsCardHover(true);
     }
@@ -63,6 +62,8 @@ const ProductCard = (props) => {
 
     return (
         <div className={`${classes.product_card}  col-12 col-sm-4 col-md-3 col-lg-2 px-2 h-100 mx-lg-3 mx-md-4 mx-sm-4 gy-4`}
+        // <div className={`${classes.product_card}  `}
+
             onMouseLeave={mouseDownHandler}
             onMouseOver={mouseOverHandler}
             onClick={productClickedHandler}

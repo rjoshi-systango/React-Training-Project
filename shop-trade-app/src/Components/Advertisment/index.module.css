@@ -21,4 +21,6 @@
     border-radius: 20px;
     border: 0px;
     text-align: center;
+    min-width: 100px;
+    
 }

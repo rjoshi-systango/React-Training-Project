@@ -1,6 +1,10 @@
-.product-card{
-    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1), 0px 4px 20px 0px rgba(0, 0, 0, 0.1);
+.product_card{
+    /* box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1), 0px 4px 20px 0px rgba(0, 0, 0, 0.1); */
     background-color: white;
+    /* max-width: 200px; */
+    /* margin: 5px 5px 5px 5px; */
+    /* width: 240px; */
+
   }
 
   .product-card:hover{
@@ -12,6 +16,7 @@
 
 .product_card_inner {
     height: 300px;
+    
 }
 
 .product_image_box_main {
