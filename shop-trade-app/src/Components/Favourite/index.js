@@ -10,9 +10,35 @@ const Favourite = (props) => {
                         {productList.length === 0 && 
                             <h5>No Favourite</h5>
                             }
-                        {
-                            productList.length > 0 &&
-                            <div className="card shadow-2-strong mb-5 mb-lg-0" style={{ borderRadius: "16px" }} >
+                        
+                        <div className="table-responsive">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" className="h5">Your Favourite</th>
+                                        <th scope="col">Select  </th>
+                                        <th scope="col">Brand</th>
+                                        <th scope="col">Favourite</th>
+                                        <th scope="col">Price</th>
+                                    </tr>
+                                </thead>
+                                {/* {tbody} */}
+                               
+                                {
+                                    productList.map((product) => (
+
+                                        <FavouriteItem key={`${product.id} ${product.sizeId}`}
+                                            productInformation={product}
+                                            
+                                        />
+                                    ))
+
+                                }
+
+                            </table>
+                        </div>
+
+                        <div className="card shadow-2-strong mb-5 mb-lg-0" style={{ borderRadius: "16px" }} >
                             <div className="card-body p-4">
 
                                 <div className="row">
@@ -46,11 +72,6 @@ const Favourite = (props) => {
                             </div>
                         </div>
 
-
-                        }
-                        
-
-                       
                     </div>
                 </div>
             </div>
