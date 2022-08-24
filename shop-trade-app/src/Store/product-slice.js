@@ -29,6 +29,17 @@ const productDataSlice = createSlice({
                 state.filteredProductList = state.productList.filter(item => item.tag === selectedCategory);
             }
         },
+        filterProuductByPrice(state, action){   
+            console.log(action.payload.sort);
+            const { sort } = action.payload;
+            if(sort === 'low-to-high') {
+                console.log("LOW");
+            }
+            else if(sort === 'high-to-low') {
+                console.log("HIGH");
+            }
+
+        },
         searchProduct(state, action){
             let searchData = action.payload.enteredSearchInput;
             state.filteredProductList = state.productList.filter((product) => {
@@ -77,7 +88,8 @@ const productDataSlice = createSlice({
             state.cartProductList = state.cartProductList.filter((product) => {
                 return product.firebaseId !== firebaseId ;
             })
-        }
+        },
+        
     
     }
 });
