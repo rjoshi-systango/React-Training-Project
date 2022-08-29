@@ -34,9 +34,12 @@ const productDataSlice = createSlice({
             const { sort } = action.payload;
             if(sort === 'low-to-high') {
                 console.log("LOW");
+                state.filteredProductList.sort(function(a, b){return a.price - b.price});
             }
             else if(sort === 'high-to-low') {
                 console.log("HIGH");
+                state.filteredProductList.sort(function(a, b){return b.price - a.price});
+
             }
 
         },
