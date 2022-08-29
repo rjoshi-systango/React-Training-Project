@@ -62,6 +62,7 @@ const Cart = (props) => {
     const { productList } = props;
     const [totalPrice, dispatch] = useReducer(priceReducer, {total: 0, tax: 0, subTotal: 0, isSelectAllClicked : false});
 
+
     const calculateTotalPrice = (checkbox, productTotalPrice) => {
         dispatch({type: checkbox, productTotalPrice});
     }
@@ -81,11 +82,10 @@ const Cart = (props) => {
             dispatch({type: "DESELECT_ALL"});
         }
 
-        // console.log(totalPrice.isSelectAllClicked);
-
     }
 
     return (
+        <>
         <section className="h-100 h-custom">
             <div className="container h-100 py-5">
                 <div className="row d-flex justify-content-center align-items-center h-100">
@@ -101,7 +101,7 @@ const Cart = (props) => {
                                         </th>
                                         <th scope="col">Brand</th>
                                         <th scope="col">Quantity</th>
-                                        <th scope="col">Price ($)</th>
+                                        <th scope="col">Price</th>
                                     </tr>
                                 </thead>
                                 {/* {tbody} */}
@@ -111,6 +111,7 @@ const Cart = (props) => {
                                             productInformation={product}
                                             calculateTotalPrice={calculateTotalPrice}
                                             isSelectAllClicked={totalPrice.isSelectAllClicked}
+                                            // deleteConfirmationHandle={deleteConfirmationHandle}
                                         />
                                     ))
                                 }
@@ -144,6 +145,7 @@ const Cart = (props) => {
                 </div>
             </div>
         </section>
+        </>
     )
 }
 

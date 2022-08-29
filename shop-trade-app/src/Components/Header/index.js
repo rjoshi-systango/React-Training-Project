@@ -57,8 +57,6 @@ const Header = () => {
 
                         </div>
 
-
-
                         <div className="navbar-nav align-items-center">
                             <div>
                                 {!isSearchIconClicked &&
@@ -82,26 +80,26 @@ const Header = () => {
                                     </div>
                                 </Link>
                             </div>
-                        
-                        <div className={`${classes.icon} me-3`} >
-                            <FontAwesomeIcon icon={faUser} />
 
-                        </div>
+                            <div className={`${classes.icon} me-3`} >
+                                <FontAwesomeIcon icon={faUser} />
 
-                        <div>
+                            </div>
 
-                            <Link to='/cart' >
-                                <div className={`${classes.icon} me-3`} >
-                                    <span ><FontAwesomeIcon icon={faShoppingCart} /></span>
-                                    <span className={`${classes.icon_content} badge rounded-pill badge-notification bg-danger`}>{cartProduct.length}</span>
-                                </div>
-                            </Link>
+                            <div>
+
+                                <Link to='/cart' >
+                                    <div className={`${classes.icon} me-3`} >
+                                        <span ><FontAwesomeIcon icon={faShoppingCart} /></span>
+                                        <span className={`${classes.icon_content} badge rounded-pill badge-notification bg-danger`}>{cartProduct.length}</span>
+                                    </div>
+                                </Link>
+                            </div>
+
                         </div>
 
                     </div>
-
                 </div>
-        </div>
             </nav >
         </div >
         // <header classNameName={`${classNamees.header} ` }>
