@@ -1,17 +1,35 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+    isLogin: false,
+    token: '',
+    isLoginPage: false,
     productList: [],
     filteredProductList: [],
     favouriteProductList: [],
     isFavourite: false,
     cartProductList: [],
+    
 }
 
 const productDataSlice = createSlice({
     name: 'product',
     initialState: initialState,
     reducers: {
+        setIsLoginPage(state, action){
+            state.isLoginPage = !state.isLoginPage;
+        },
+        setToken(state, action) {
+            console.log("set token");
+            state.token = action.payload.token;
+            state.isLogin = !!action.payload.token;
+        },
+        removeToken(state, action) {
+            state.token = '';
+            state.isLogin = false;
+            state.favouriteProductList = [];
+            state.cartProductList = [];
+        },
         addProduct(state, action) {
             state.productList.push(...action.payload.productList);
             state.filteredProductList.push(...action.payload.productList);
@@ -92,6 +110,10 @@ const productDataSlice = createSlice({
                 return product.firebaseId !== firebaseId ;
             })
         },
+        changeAuthState(state, action){
+            console.log("change");
+            state.isLogin = true;
+        }
         
     
     }
@@ -133,9 +155,11 @@ export const fetchCartData = () => {
 
 
 export const fetchFavouriteData = () => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async (dispatch) => {
         const fetchData = async () => {
-            const response = await fetch("https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail.json");
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/favourite_product_detail.json`);
             if (!response.ok) {
                 throw new Error("Not able to fetch data");
             }
@@ -178,17 +202,19 @@ export const sorting = (sortOrder, filteredProductList) => {
 }
 
 export const changeFavouriteState = (productId, request) => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async(dispatch) => {
         const httpReq = async() => {
             let response;
             if(request === 'POST') {
-                response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail/${productId}.json`, {
+            response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/favourite_product_detail/${productId}.json`, {
                     method: request,
                     body: JSON.stringify(true)
                 });
             }
             else if(request === 'DELETE') {
-                response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/favourite_product_detail/${productId}.json`, {
+                response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/favourite_product_detail/${productId}.json`, {
                     method: request
                 });
             }
@@ -215,9 +241,11 @@ export const changeFavouriteState = (productId, request) => {
 }
 
 export const fetchCartProductList = () => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async(dispatch) => {
         const fetchData = async() => {
-            const response = await fetch('https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail.json')
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/cart_product_detail.json`)
             if(!response.ok) {
                 throw new Error("Failed to fetch cart product list");
             }
@@ -249,9 +277,11 @@ export const fetchCartProductList = () => {
 
 
 export const addToCartDB = (productInformation) => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async(dispatch) => {
         const sendData = async() => {
-            const response = await fetch('https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail.json', {
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/cart_product_detail.json`, {
                 method: 'POST',
                 body: JSON.stringify(productInformation)
             })
@@ -272,9 +302,11 @@ export const addToCartDB = (productInformation) => {
 }
 
 export const deleteCartProduct = (firebaseId) => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async(dispatch) => {
         const deleteData = async() => {
-            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail/${firebaseId}.json`, {
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/cart_product_detail/${firebaseId}.json`, {
                 method: "DELETE"
             })
             if(!response.ok) {
@@ -296,9 +328,11 @@ export const deleteCartProduct = (firebaseId) => {
 }
 
 export const addCartNewProduct = (productInformation) => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async(dispatch) => {
         const sendData = async() => {
-            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail.json`, {
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/cart_product_detail.json`, {
                 method: "POST",
                 body: JSON.stringify(productInformation)
             });
@@ -320,9 +354,11 @@ export const addCartNewProduct = (productInformation) => {
 }
 
 export const updateProductQuanity = (firebaseId, quantity) => {
+    let email = localStorage.getItem('email');
+    email = email.split('.')[0];
     return async(dispatch) => {
         const updateData = async() => {
-            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/cart_product_detail/${firebaseId}.json`,{
+            const response = await fetch(`https://shop-trade-46795-default-rtdb.firebaseio.com/users/${email}/cart_product_detail/${firebaseId}.json`,{
                 method: "PATCH",
                 body: JSON.stringify({quantity})
 
