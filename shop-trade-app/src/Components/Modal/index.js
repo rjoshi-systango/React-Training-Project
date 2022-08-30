@@ -1,15 +1,12 @@
 import classes from './index.module.css'; 
-
-import ReactDOM from 'react-dom';
 import BackDrop from './BackDrop';
 
 const Modal = (props) => {
     console.log("Modal");
-  const portalElement = document.getElementById("overlays");
 
     return (
         <>
-        {ReactDOM.createPortal(<BackDrop onClose={props.onClose} />, portalElement)}
+        {(<BackDrop  />)}
        
         <div className={`card w-50 ${classes.modal}` }>
             

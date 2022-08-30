@@ -2,10 +2,11 @@ import classes from "./index.module.css";
 import logo from "../../Assests/img/systango_logo.jpeg";
 import { useDispatch, useSelector } from 'react-redux';
 import { productDataActions } from "../../Store/product-slice";
-import { faHeart, faUser, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import User from "./User";
 
 
 const Header = () => {
@@ -13,6 +14,7 @@ const Header = () => {
     const cartProduct = useSelector(state => state.cartProductList);
     const [isSearchIconClicked, setIsSearchIconClicked] = useState(false);
     const [isToggleClick, setIsToggleClick] = useState(false);
+    const isLogin = useSelector(state => state.isLogin);
     let toggleClass = isToggleClick ? 'collapse.show' : 'collapse';
     const dispatch = useDispatch();
 
@@ -28,6 +30,8 @@ const Header = () => {
     const toggleClickHandler = () => {
         setIsToggleClick((state) => !state);
     }
+
+    
 
     return (
         <div className="m-1">
@@ -73,27 +77,26 @@ const Header = () => {
                                 }
                             </div>
                             <div>
-                                <Link to="/favourite" >
+                                {isLogin && <Link to="/favourite" >
                                     <div className={`${classes.icon} me-3`}>
                                         <span className="icon"><FontAwesomeIcon icon={faHeart} /></span>
                                         <span className={`${classes.icon_content} badge rounded-pill badge-notification bg-danger`}>{favouriteProduct.length}</span>
                                     </div>
-                                </Link>
+                                </Link>}
                             </div>
 
-                            <div className={`${classes.icon} me-3`} >
-                                <FontAwesomeIcon icon={faUser} />
+                           {/* {} */}
 
-                            </div>
+                            <User />
 
                             <div>
 
-                                <Link to='/cart' >
+                                {isLogin && <Link to='/cart' >
                                     <div className={`${classes.icon} me-3`} >
                                         <span ><FontAwesomeIcon icon={faShoppingCart} /></span>
                                         <span className={`${classes.icon_content} badge rounded-pill badge-notification bg-danger`}>{cartProduct.length}</span>
                                     </div>
-                                </Link>
+                                </Link>}
                             </div>
 
                         </div>
