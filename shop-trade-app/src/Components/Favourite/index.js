@@ -1,5 +1,7 @@
 import FavouriteItem from "./FavouriteItem";
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
+import Message from "../Message";
+import ReactDOM from 'react-dom';
 
 const priceReducer = (state, action) => {
     if(action.type === true) {
@@ -40,11 +42,26 @@ const priceReducer = (state, action) => {
 const Favourite = (props) => {
     const { productList } = props;
     const [totalPrice, dispatch] = useReducer(priceReducer, {total: 0, tax: 0, subTotal: 0});
+    const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+
     const calculateTotalPrice = (checkbox, productTotalPrice) => {
         dispatch({type: checkbox, productTotalPrice});
+    }
+
+const buyClickHandler = () => {
+    setIsOrderPlaced(true);
 }
 
+const closeMessageBoxHandler = () => {
+    setIsOrderPlaced(false);
+}
+
+const portalElement = document.getElementById('overlays');
+
+
 return (
+    <>
+        {isOrderPlaced && ReactDOM.createPortal(<Message onClose={closeMessageBoxHandler}/>, portalElement)}
         <section className="h-100 h-custom">
             <div className="container h-100 py-5">
                 <div className="row d-flex justify-content-center align-items-center h-100">
@@ -91,7 +108,7 @@ return (
                                             <p className="mb-2">${totalPrice.tax}</p>
                                         </div>
 
-                                        <button type="button" className="btn btn-primary btn-block btn-lg">
+                                        <button type="button" onClick={buyClickHandler} className="btn btn-primary btn-block btn-lg">
                                             <div className="d-flex justify-content-between">
                                                 <span>Checkout</span>
                                                 <span className="px-2"> ${totalPrice.total}</span>
@@ -105,6 +122,7 @@ return (
                 </div>
             </div>
         </section>
+    </>
     )
 }
 
