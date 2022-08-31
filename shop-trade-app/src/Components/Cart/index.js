@@ -1,5 +1,9 @@
-import { useReducer } from "react";
+import { useReducer, useState } from "react";
+import ReactDOM from 'react-dom';
 import CartItem from "./CartItem";
+import { useHistory } from 'react-router-dom';
+import Message from "../Message";
+
 
 const priceReducer = (state, action) => {
     if (action.type === true) {
@@ -38,9 +42,26 @@ const priceReducer = (state, action) => {
 const Cart = (props) => {
     const { productList } = props;
     const [totalPrice, dispatch] = useReducer(priceReducer, { total: 0, tax: 0, subTotal: 0, isSelectAllClicked: false });
+    const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+    const portalElement = document.getElementById('overlays');
+    
+    const history = useHistory();
+
 
     const calculateTotalPrice = (checkbox, productTotalPrice) => {
         dispatch({ type: checkbox, productTotalPrice });
+    }
+
+    const buyClickHandler = () => {
+        setIsOrderPlaced(true);
+        setTimeout(() => {
+            setIsOrderPlaced(false);
+            history.replace('/');
+        }, 2000)
+    }
+
+    const closeMessageBoxHandler = () => {
+        setIsOrderPlaced(false);
     }
 
     return (
@@ -48,6 +69,7 @@ const Cart = (props) => {
             <section className="h-100 h-custom">
                 <div className="container h-100 py-5">
                     <div className="row d-flex justify-content-center align-items-center h-100">
+                    {isOrderPlaced && ReactDOM.createPortal(<Message onClose={closeMessageBoxHandler}/>, portalElement)}
                         <div className="col">
                             <div className="table-responsive">
                                 <table className="table">
@@ -84,7 +106,7 @@ const Cart = (props) => {
                                                 <p className="mb-2">Total (tax included)</p>
                                                 <p className="mb-2">${totalPrice.tax.toFixed(2)}</p>
                                             </div>
-                                            <button type="button" className="btn btn-primary btn-block btn-lg">
+                                            <button type="button" onClick={buyClickHandler} className="btn btn-primary btn-block btn-lg">
                                                 <div className="d-flex justify-content-between">
                                                     <span>Checkout</span>
                                                     <span className="px-2"> ${totalPrice.total.toFixed(2)}</span>

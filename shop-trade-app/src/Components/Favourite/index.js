@@ -2,6 +2,7 @@ import FavouriteItem from "./FavouriteItem";
 import { useReducer, useState } from "react";
 import Message from "../Message";
 import ReactDOM from 'react-dom';
+import { useHistory } from 'react-router-dom';
 
 const priceReducer = (state, action) => {
     if(action.type === true) {
@@ -43,6 +44,7 @@ const Favourite = (props) => {
     const { productList } = props;
     const [totalPrice, dispatch] = useReducer(priceReducer, {total: 0, tax: 0, subTotal: 0});
     const [isOrderPlaced, setIsOrderPlaced] = useState(false);
+    const history = useHistory();
 
     const calculateTotalPrice = (checkbox, productTotalPrice) => {
         dispatch({type: checkbox, productTotalPrice});
@@ -50,6 +52,10 @@ const Favourite = (props) => {
 
 const buyClickHandler = () => {
     setIsOrderPlaced(true);
+    setTimeout(() => {
+        setIsOrderPlaced(false);
+        history.replace('/');
+    }, 2000)
 }
 
 const closeMessageBoxHandler = () => {
@@ -61,10 +67,10 @@ const portalElement = document.getElementById('overlays');
 
 return (
     <>
-        {isOrderPlaced && ReactDOM.createPortal(<Message onClose={closeMessageBoxHandler}/>, portalElement)}
         <section className="h-100 h-custom">
             <div className="container h-100 py-5">
                 <div className="row d-flex justify-content-center align-items-center h-100">
+                    {isOrderPlaced && ReactDOM.createPortal(<Message onClose={closeMessageBoxHandler}/>, portalElement)}
                     <div className="col">
                         {productList.length === 0 && 
                             <h5>No Favourite</h5>
