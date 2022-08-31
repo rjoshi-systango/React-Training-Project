@@ -13,6 +13,7 @@ const User = (props) => {
 
     const isLogin = useSelector(state => state.isLogin);
     const isLoginPage = useSelector(state => state.isLoginPage);
+    const email = localStorage.getItem("email");
     // const isLogin = true;
     console.log(isLogin);
     // const [isSignUpClick, setIsSignUpClick] = useState(false);
@@ -36,8 +37,8 @@ const User = (props) => {
                 <NavDropdown title={<FontAwesomeIcon icon={faUser} />} id="navbarScrollingDropdown">
 
                     
-                    <div className={`${classes.username}`} > <h6>User</h6></div>
-                    <div className={`${classes.message}`} > email</div>
+                    <div className={`${classes.message}`} >You are logged in with :</div>
+                    <div className={`${classes.username}`} > <h6>{email}</h6></div>
                     
                     <NavDropdown.Divider />
                     <div className={`${classes.logout_option}`}>
