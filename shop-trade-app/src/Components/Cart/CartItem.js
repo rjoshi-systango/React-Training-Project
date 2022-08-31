@@ -2,26 +2,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { deleteCartProduct, updateProductQuanity } from "../../Store/product-slice";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import classes from './CartItem.module.css';
 import ReactDOM from 'react-dom';
 import Modal from "../Modal";
 
 
 const CartItem = (props) => {
-  const { productInformation, isSelectAllClicked } = props;
+  const { productInformation } = props;
   let isQuantityOne = productInformation.quantity === 1;
-  const [isCheckboxClicked, setIsCheckboxClicked] = useState(isSelectAllClicked);
+  const [isCheckboxClicked, setIsCheckboxClicked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (isSelectAllClicked) {
-      setIsCheckboxClicked(isSelectAllClicked);
-    }
+  // useEffect(() => {
+  //   if (isSelectAllClicked) {
+  //     setIsCheckboxClicked(isSelectAllClicked);
+  //   }
 
-  }, [isSelectAllClicked, isCheckboxClicked]);
+  // }, [isSelectAllClicked, isCheckboxClicked]);
 
   const minusClickHandler = (event) => {
     if (productInformation.quantity > 1) {

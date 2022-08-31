@@ -46,7 +46,7 @@ const Login = (props) => {
 
             <div className={`card  ${classes.container}`}>
 
-                <div className={`card-header`}> {isExistingUser ? "Log In" : "Sign In"} </div>
+                <div className={`card-header`}> {isExistingUser ? "Log In" : "Sign Up"} </div>
 
 
                 <div className={`card-body`}>
