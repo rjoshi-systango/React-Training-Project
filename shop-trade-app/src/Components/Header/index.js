@@ -31,8 +31,6 @@ const Header = () => {
         setIsToggleClick((state) => !state);
     }
 
-    
-
     return (
         <div className="m-1">
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -85,7 +83,7 @@ const Header = () => {
                                 </Link>}
                             </div>
 
-                           {/* {} */}
+                            {/* {} */}
 
                             <User />
 
@@ -105,47 +103,6 @@ const Header = () => {
                 </div>
             </nav >
         </div >
-        // <header classNameName={`${classNamees.header} ` }>
-        //     <Link to="/">
-        //         <div classNameName={classNamees.img_logo_box}>
-        //             <img src={logo} alt="logo"/>
-        //         </div>  
-        //     </Link>
-        //     <div classNameName={classNamees.header_center}>
-        //         <p classNameName={classNamees.header_center_content}>Shop</p>
-        //         <p classNameName={classNamees.header_center_content}>About us</p>
-        //         <p classNameName={classNamees.header_center_content}>Our Stories</p>
-        //         <p classNameName={classNamees.header_center_content}> Contact Us</p>
-        //     </div>
-        //     <div classNameName={classNamees.header_right}>
-        //         {!isSearchIconClicked && 
-        //         <p classNameName={classNamees.header_left_content} >
-
-        //             <FontAwesomeIcon icon={faSearch} onClick={searchClickHandler}/>
-        //         </p>
-        //         }
-        //         {isSearchIconClicked &&
-        //             <input type="text" classNameName={classNamees.header_left_content} placeholder="search" onChange={searchInputChangeHandler}/>
-        //         }
-
-
-        //         <Link to="/favourite">
-        //             <p classNameName={classNamees.header_left_content} >
-        //                 <FontAwesomeIcon icon={faHeart} />
-        //                 <sup>{favouriteProduct.length}</sup>
-        //             </p>
-        //         </Link>
-        //         <p classNameName={classNamees.header_left_content}>
-        //             <FontAwesomeIcon icon={faUser} />
-        //         </p>
-        //         <Link to='/cart' >
-        //             <p classNameName={classNamees.header_left_content}>
-        //                 <FontAwesomeIcon icon={faShoppingCart} />
-        //                 <sup>{cartProduct.length}</sup>
-        //             </p>
-        //         </Link>
-        //     </div>
-        // </header>
     )
 }
 

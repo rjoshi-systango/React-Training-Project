@@ -11,6 +11,7 @@ const Login = (props) => {
     const [isExistingUser, setIsExistingUser] = useState(true);
 
     const dispatch = useDispatch();
+
     const enteredEmail = useRef();
     const enteredPassword = useRef();
 
@@ -20,19 +21,16 @@ const Login = (props) => {
 
     const submitClickHandler = (event) => {
         event.preventDefault();
-        // console.log("submit");
         let email = enteredEmail.current.value;
         let password = enteredPassword.current.value;
         let user = {
             email, password
         }
-        if(isExistingUser) {
-            // console.log("existing");
+        if (isExistingUser) {
             dispatch(isUser(user));
             props.closeLogin();
         }
         else {
-            // console.log("new user");
             dispatch(createUser(user));
         }
 
@@ -61,8 +59,6 @@ const Login = (props) => {
                             <input type="password" id="defaultForm-password" ref={enteredPassword} className={`${classes.input_field} form-control validate`} placeholder="Your password" />
                             <label data-error="wrong" data-success="right" htmlFor="defaultForm-password"></label>
                         </div>
-
-
 
                         {isExistingUser &&
 

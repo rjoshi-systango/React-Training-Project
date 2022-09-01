@@ -1,35 +1,3 @@
-/* .header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* flex-wrap: wrap; */
-/* } */
-
-/* .img_logo_box { */
-    /* width: 100%; */
-    /* height: auto;     */
-/* } */
-
-/* .header_center {
-    display: flex;
-    flex-direction: row; */
-    /* flex-wrap: wrap; */
-
-/* } */
-
-/* .header_center_content {
-    margin: 10px;
-}
-
-.header_right {
-    display: flex;
-    flex-direction: row;
-}
-
-
-.header_left_content {
-    margin: 10px; */
-/* } */ 
 .icon {
     position: relative;
     color: black;

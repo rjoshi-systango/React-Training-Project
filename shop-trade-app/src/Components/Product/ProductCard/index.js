@@ -3,20 +3,22 @@ import classes from './index.module.css';
 import FavouriteButton from '../../FavouriteButton/index';
 import ProductDescription from './ProductDescription';
 import ProductPrice from './ProductPrice';
-// import { addToCartDB } from '../../../Store/product-slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { addCartNewProduct, productDataActions, updateProductQuanity } from '../../../Store/product-slice';
-// import CartButton from '../../CartButton/index';
 
 const ProductCard = (props) => {
     const productInformation = props.productInformation;
+
     const [isCardHover, setIsCardHover] = useState(false);
     const [isProductClicked, setIsProductClicked] = useState();
     const [isSizeSelected, setIsSizeSelected] = useState(false);
     const [selectedSize, setSelectedSize] = useState();;
+
     const cartProductList = useSelector(state => state.cartProductList);
     const isLogin = useSelector(state => state.isLogin);
+
     const dispatch = useDispatch();
+
     const mouseOverHandler = () => {
         setIsCardHover(true);
     }
@@ -30,16 +32,12 @@ const ProductCard = (props) => {
     }
 
     const sizeClickHandler = (event) => {
-        // console.log(event.currentTarget.id);
         setSelectedSize(event.currentTarget.id);
         setIsSizeSelected(true);
         setIsProductClicked(true);
     }
 
     const addToCartClickHandler = () => {
-        console.log(cartProductList);
-        // console.log(selectedSize);
-
         if (isLogin) {
             let existingProduct = false;
 
@@ -48,13 +46,11 @@ const ProductCard = (props) => {
                 if (product.id === productInformation.id && product.sizeId === selectedSize) {
                     existingProduct = true;
                     let quantity = product.quantity + 1
-                    console.log("existing");
                     dispatch(updateProductQuanity(product.firebaseId, quantity));
                 }
             })
 
             if (!existingProduct) {
-                console.log("new");
                 let transformedInformation = {};
                 transformedInformation = { ...productInformation, sizeId: selectedSize, quantity: 1 }
                 dispatch(addCartNewProduct(transformedInformation));
@@ -68,16 +64,13 @@ const ProductCard = (props) => {
             setIsSizeSelected(false);
             setSelectedSize(false);
         }, 1000);
-        
+
     }
 
     return (
         <div className={`${classes.product_card}  col-12 col-sm-4 col-md-3 col-lg-2 px-2 h-100 mx-lg-3 mx-md-4 mx-sm-4 gy-4`}
-            // <div className={`${classes.product_card}  `}
-
             onMouseLeave={mouseDownHandler}
             onMouseOver={mouseOverHandler}
-
         >
             <div className={classes.product_card_inner}>
                 <div className={classes.product_image_box_main}>

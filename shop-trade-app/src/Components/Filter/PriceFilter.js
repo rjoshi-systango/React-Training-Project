@@ -3,18 +3,14 @@ import { useDispatch } from 'react-redux';
 import { productDataActions } from "../../Store/product-slice";
 
 const PriceFilter = () => {
-    // const filteredProductList = useSelector(state => state.filteredProductList);
     const dispatch = useDispatch();
 
-    // console.log(filteredProductList);
     const categoryChangeHandler = (event) => {
-        // console.log(event.target.value);
         const sortBy = event.target.value;
         if (sortBy) {
             dispatch(productDataActions.filterProuductByPrice({
                 sort: sortBy
             }));
-
         }
     }
 

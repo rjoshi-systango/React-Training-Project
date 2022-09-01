@@ -1,4 +1,4 @@
-import  classes from './ProductCounter.module.css';
+import classes from './ProductCounter.module.css';
 import { useSelector } from "react-redux";
 
 const ProductCounter = () => {

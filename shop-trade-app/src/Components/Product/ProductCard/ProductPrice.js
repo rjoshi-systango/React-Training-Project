@@ -1,7 +1,7 @@
 import classes from './ProductPrice.module.css';
 
 const ProductPrice = (props) => {
-    const {productInformation} = props;
+    const { productInformation } = props;
     const discountPercentage = 100 - ((productInformation.price * 100) / productInformation.compare_at_price);
 
     return (

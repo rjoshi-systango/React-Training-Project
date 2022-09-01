@@ -16,20 +16,12 @@ const CartItem = (props) => {
 
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (isSelectAllClicked) {
-  //     setIsCheckboxClicked(isSelectAllClicked);
-  //   }
-
-  // }, [isSelectAllClicked, isCheckboxClicked]);
-
   const minusClickHandler = (event) => {
     if (productInformation.quantity > 1) {
       dispatch(updateProductQuanity(productInformation.firebaseId, (productInformation.quantity - 1)));
       const totalPrice = productInformation.price;
-      console.log(totalPrice);
+
       if (isCheckboxClicked) {
-        console.log("yes plus if checked");
         props.calculateTotalPrice("SUB", totalPrice);
       }
     }
@@ -51,8 +43,8 @@ const CartItem = (props) => {
   }
 
   const deleteIconClickHandler = (information) => {
-        setIsModalOpen(true);
-    }
+    setIsModalOpen(true);
+  }
 
   const confirmClickHandler = () => {
     dispatch(deleteCartProduct(productInformation.firebaseId));
@@ -98,11 +90,7 @@ const CartItem = (props) => {
           <td className="align-middle">
             <p className="mb-0" style={{ fontWeight: "500" }}>{productInformation.vendor}</p>
           </td>
-          {/* <td>
-          <div>
-            <FontAwesomeIcon icon={fapinner} />
-          </div>
-        </td> */}
+      
           <td className="align-middle">
             <div className="d-flex flex-row">
               {isQuantityOne &&
@@ -123,10 +111,10 @@ const CartItem = (props) => {
               <button className="btn btn-link px-2  "
                 onClick={plusClickHandler} >
                 <FontAwesomeIcon className={classes.icon} icon={faPlus} />
-
               </button>
             </div>
           </td>
+          
           <td className="align-middle">
             <p className="mb-0" style={{ fontWeight: "500" }}>${productInformation.price} </p>
           </td>

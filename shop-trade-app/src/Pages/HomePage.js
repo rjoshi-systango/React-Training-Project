@@ -9,13 +9,13 @@ const HomePage = () => {
   console.log(filteredProductList);
 
   return (
-        <>
-          <Layout>
-            <FilterArea />
-            <Product filteredProductList={filteredProductList}/>
-          </Layout>
-        </>
-    );
+    <>
+      <Layout>
+        <FilterArea />
+        <Product filteredProductList={filteredProductList} />
+      </Layout>
+    </>
+  );
 }
 
 export default HomePage;

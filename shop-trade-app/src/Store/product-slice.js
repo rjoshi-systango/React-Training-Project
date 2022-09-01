@@ -20,7 +20,6 @@ const productDataSlice = createSlice({
             state.isLoginPage = !state.isLoginPage;
         },
         setToken(state, action) {
-            console.log("set token");
             state.token = action.payload.token;
             state.isLogin = !!action.payload.token;
         },
@@ -48,16 +47,12 @@ const productDataSlice = createSlice({
             }
         },
         filterProuductByPrice(state, action){   
-            console.log(action.payload.sort);
             const { sort } = action.payload;
             if(sort === 'low-to-high') {
-                console.log("LOW");
                 state.filteredProductList.sort(function(a, b){return a.price - b.price});
             }
             else if(sort === 'high-to-low') {
-                console.log("HIGH");
                 state.filteredProductList.sort(function(a, b){return b.price - a.price});
-
             }
 
         },
@@ -68,7 +63,6 @@ const productDataSlice = createSlice({
             });
         },
         addFavouriteItem(state, action){
-            // console.log(action.payload.cartProductList);
             state.favouriteProductList.push(action.payload.productId);
         },
         removeFavouriteItem(state, action){
@@ -83,7 +77,6 @@ const productDataSlice = createSlice({
             state.isFavourite = action.payload.isFavourite;
         },
         addCartItem(state, action){
-            // console.log(action.payload.cartProductList);
             state.cartProductList.push(...action.payload.cartProductList);
         },
         addToCart(state, action) {
@@ -92,11 +85,7 @@ const productDataSlice = createSlice({
 
         }, 
         updateQuantity(state, action) {
-            //change the quantity of product
             const { firebaseId, quantity } = action.payload;
-            // console.log(firebaseId);
-            // console.log(quantity);
-            // console.log(state.cartProductList);
             state.cartProductList.forEach((product) => {
                 if(product.firebaseId === firebaseId) {
                     product.quantity = quantity;
@@ -111,11 +100,8 @@ const productDataSlice = createSlice({
             })
         },
         changeAuthState(state, action){
-            console.log("change");
             state.isLogin = true;
         }
-        
-    
     }
 });
 
@@ -191,7 +177,6 @@ export const fetchFavouriteData = () => {
 }
 
 export const sorting = (sortOrder, filteredProductList) => {
-    console.log(filteredProductList, sortOrder);
     return (dispatch) => {
         dispatch(
             productDataActions.filterProductByPrice({
@@ -255,14 +240,11 @@ export const fetchCartProductList = () => {
 
         try{
             const cartProductList = await fetchData();
-            // console.log(cartProductList);
             let transformedCartProductList = [];
             for(let index in cartProductList) {
-                // console.log(cartProductList[index]);
                 transformedCartProductList.push({ ...cartProductList[index], firebaseId: index});
-
             }
-            // console.log(transformedCartProductList);
+
             dispatch(
                 productDataActions.addCartItem({
                     cartProductList: transformedCartProductList
@@ -344,7 +326,6 @@ export const addCartNewProduct = (productInformation) => {
         }
         try{
             const result = await sendData();
-            console.log(result.name);
             const tranformedData = {...productInformation, firebaseId: result.name};
             dispatch(productDataActions.addToCart({ productInformation: tranformedData }))
         }catch(error){
@@ -371,9 +352,7 @@ export const updateProductQuanity = (firebaseId, quantity) => {
         }
         try{
             await updateData();
-            // console.log(result);
             dispatch(productDataActions.updateQuantity({firebaseId, quantity}));
-            
 
         } catch(error){
             console.log(error);

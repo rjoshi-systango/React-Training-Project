@@ -6,6 +6,7 @@ const FavouritePage = () => {
     const favouriteProductId = useSelector(state => state.favouriteProductList);
 
     const favouriteProductList = [];
+
     favouriteProductId.forEach((favId) => {
         favId = parseInt(favId);
         filteredProductList.forEach((productInformation) => {
@@ -14,15 +15,13 @@ const FavouritePage = () => {
             if (productId === favId) {
                 favouriteProductList.push(productInformation);
             }
-        } )
+        })
     })
-    console.log(favouriteProductId);
     return (
         <div>
-            <Favourite productList={favouriteProductList}/>
-            {/* <Product filteredProductList={favouriteProductList}  />    */}
+            <Favourite productList={favouriteProductList} />
         </div>
     );
-}   
+}
 
 export default FavouritePage;

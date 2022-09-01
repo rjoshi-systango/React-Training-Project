@@ -16,8 +16,8 @@ const FavouriteButton = (props) => {
     const dispatch = useDispatch();
 
     const favouriteClickHandler = () => {
-        if(isLogin) {
-            if(isFavourite.length > 0) {
+        if (isLogin) {
+            if (isFavourite.length > 0) {
                 dispatch(changeFavouriteState(props.id, 'DELETE'));
             }
             else {
@@ -31,7 +31,7 @@ const FavouriteButton = (props) => {
 
     return (
         <div onClick={favouriteClickHandler} className={`${classes.favourite_btn}`} >
-           <FontAwesomeIcon className={`card-img-overlay`} icon={isFavourite.length > 0 ? faHeart : faHeartEmpty} />
+            <FontAwesomeIcon className={`card-img-overlay`} icon={isFavourite.length > 0 ? faHeart : faHeartEmpty} />
         </div>
     )
 }

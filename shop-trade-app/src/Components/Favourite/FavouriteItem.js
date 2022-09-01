@@ -26,7 +26,7 @@ const FavouriteItem = (props) => {
   }
 
   const confirmClickHandler = () => {
-    if(isCheckboxClicked) {
+    if (isCheckboxClicked) {
       price = parseInt(price);
       calculateTotalPrice("SUB", price);
     }
@@ -40,9 +40,9 @@ const FavouriteItem = (props) => {
 
   const portalElement = document.getElementById('overlays');
 
-  return  (
+  return (
     <>
-      {isModalOpen && ReactDOM.createPortal(<Modal   onConfirm={confirmClickHandler} onCancel={cancelClickHandler} />, portalElement)}
+      {isModalOpen && ReactDOM.createPortal(<Modal onConfirm={confirmClickHandler} onCancel={cancelClickHandler} />, portalElement)}
 
       <tbody>
         <tr>

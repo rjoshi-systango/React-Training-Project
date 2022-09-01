@@ -3,12 +3,10 @@ import { useSelector } from "react-redux";
 
 const CartPage = () => {
     const cartProductList = useSelector(state => state.cartProductList);
-    // const allProductList = useSelector(state => state.productList);
-
 
     return (
         <div>
-            <Cart productList={cartProductList}/>
+            <Cart productList={cartProductList} />
 
         </div>
     );

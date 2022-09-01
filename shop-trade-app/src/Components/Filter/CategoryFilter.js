@@ -4,7 +4,6 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
 import { productDataActions } from '../../Store/product-slice';
 
-// const categoryContainer = ["Denim", "Jeans", "Tee-Shirt", "Jackets"]
 const uniqueCategory = { "All-Products": true };
 
 const CategoryFilter = () => {
@@ -32,13 +31,13 @@ const CategoryFilter = () => {
 
             <div className="container-fluid d-flex  ">
                 <div className='d-flex flex-wrap'>
-                <p className={` ${classes.filter_heading} m-0 align-self-center`}>FILTERS :</p>
+                    <p className={` ${classes.filter_heading} m-0 align-self-center`}>FILTERS :</p>
 
-                {categoryContainer.map((item) => (
-                    <div key={item}>
-                        <button className={`${classes.categoryBtn}`} value={item} onClick={filterClickHandler} >{item}</button>
-                    </div>
-                ))}
+                    {categoryContainer.map((item) => (
+                        <div key={item}>
+                            <button className={`${classes.categoryBtn}`} value={item} onClick={filterClickHandler} >{item}</button>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
