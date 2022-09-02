@@ -2,19 +2,28 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { deleteCartProduct, updateProductQuanity } from "../../Store/product-slice";
 import { useDispatch } from "react-redux";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classes from './CartItem.module.css';
 import ReactDOM from 'react-dom';
 import Modal from "../Modal";
 
 
 const CartItem = (props) => {
-  const { productInformation } = props;
+  const { productInformation, isSelectAllClicked, selectCounter } = props;
   let isQuantityOne = productInformation.quantity === 1;
   const [isCheckboxClicked, setIsCheckboxClicked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if(isSelectAllClicked) {
+      setIsCheckboxClicked(isSelectAllClicked);
+    }
+    else if(!isSelectAllClicked && selectCounter%2 === 0 ) {
+      setIsCheckboxClicked(false);
+    }
+  }, [isSelectAllClicked, selectCounter])
 
   const minusClickHandler = (event) => {
     if (productInformation.quantity > 1) {
@@ -36,9 +45,14 @@ const CartItem = (props) => {
   }
 
   const checkboxChangeHandler = (event) => {
-    setIsCheckboxClicked((state) => !state);
     const checked = event.target.checked;
     const totalPrice = productInformation.price * productInformation.quantity;
+    
+    setIsCheckboxClicked((state) => !state);
+    if(isSelectAllClicked) {
+      props.onProductDeselect();
+    }
+
     props.calculateTotalPrice(checked, totalPrice);
   }
 
