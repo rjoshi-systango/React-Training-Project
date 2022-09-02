@@ -15,7 +15,7 @@ const CartItem = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const dispatch = useDispatch();
-
+  console.log(selectCounter);
   useEffect(() => {
     if(isSelectAllClicked) {
       setIsCheckboxClicked(isSelectAllClicked);
