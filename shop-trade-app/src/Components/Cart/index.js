@@ -50,8 +50,8 @@ const priceReducer = (state, action) => {
             subTotal: allProductTotal,
             tax: (allProductTotal * 5) / 100,
             total: allProductTotal + ((allProductTotal * 5) / 100),
-            isSelectAllClicked : true,
-            selectCount: state.selectCount + 1
+            isSelectAllClicked: true,
+            selectCount: 1
         }
     }
     if (action.type === "DESELECT_ALL") {
@@ -60,7 +60,7 @@ const priceReducer = (state, action) => {
             tax: 0,
             total: 0,
             isSelectAllClicked: false,
-            selectCount: state.selectCount + 1
+            selectCount: 2
         }
     }
     if (action.type === "") {
@@ -94,22 +94,22 @@ const Cart = (props) => {
     }
 
     const selectAllChangleHandler = (event) => {
-        const { checked }= event.target;
+        const { checked } = event.target;
         let totalPrice = 0;
-        
+
         if (checked) {
             productList.forEach((product) => {
                 totalPrice += product.price * product.quantity
             });
-            dispatch({type: "SELECT_ALL", totalPrice});
+            dispatch({ type: "SELECT_ALL", totalPrice });
         }
         else {
-            dispatch({type: "DESELECT_ALL"});
+            dispatch({ type: "DESELECT_ALL" });
         }
     }
 
     const deSelectAll = (totalPrice) => {
-        dispatch({type: "", productTotalPrice: totalPrice });
+        dispatch({ type: "", productTotalPrice: totalPrice });
     }
 
     const closeMessageBoxHandler = () => {
@@ -121,7 +121,7 @@ const Cart = (props) => {
             <section className="h-100 h-custom">
                 <div className="container h-100 py-5">
                     <div className="row d-flex justify-content-center align-items-center h-100">
-                    {isOrderPlaced && ReactDOM.createPortal(<Message onClose={closeMessageBoxHandler}/>, portalElement)}
+                        {isOrderPlaced && ReactDOM.createPortal(<Message onClose={closeMessageBoxHandler} />, portalElement)}
                         <div className="col">
                             <div className="table-responsive">
                                 <table className="table">
@@ -130,22 +130,22 @@ const Cart = (props) => {
                                             <th scope="col"> </th>
                                             <th scope="col" className="h5">Systango Shopping Bag</th>
                                             <th scope="col">
-                                                <input type='checkbox' checked={totalPrice.isSelectAllClicked} className={`mb-0`} onChange={selectAllChangleHandler}/>  Select
+                                                <input type='checkbox' checked={totalPrice.isSelectAllClicked} className={`mb-0`} onChange={selectAllChangleHandler} />  Select
                                             </th>
                                             <th scope="col">Brand</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Price</th>
                                         </tr>
                                     </thead>
-                                    { productList.map((product) => (
+                                    {productList.map((product) => (
                                         <CartItem key={`${product.id} ${product.sizeId}`}
                                             productInformation={product}
                                             calculateTotalPrice={calculateTotalPrice}
                                             isSelectAllClicked={totalPrice.isSelectAllClicked}
-                                            onProductDeselect={deSelectAll} 
+                                            onProductDeselect={deSelectAll}
                                             selectCounter={totalPrice.selectCount}
                                         />
-                                     ))
+                                    ))
                                     }
                                 </table>
                             </div>
