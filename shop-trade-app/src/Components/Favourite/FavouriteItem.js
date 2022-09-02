@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
@@ -8,11 +8,22 @@ import Modal from '../Modal';
 
 
 const FavouriteItem = (props) => {
-  const { productInformation, calculateTotalPrice } = props;
+  const { productInformation, calculateTotalPrice, isSelectAllClicked, selectCounter } = props;
   let { price } = productInformation;
   const dispatch = useDispatch();
   const [isCheckboxClicked, setIsCheckboxClicked] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    console.log(isSelectAllClicked);
+    if(isSelectAllClicked) {
+      setIsCheckboxClicked(isSelectAllClicked);
+    }
+    else if(!isSelectAllClicked && selectCounter%2 === 0 ) {
+      setIsCheckboxClicked(false);
+    }
+  }, [isSelectAllClicked, selectCounter]);
+
 
   const checkBoxChangeHandler = (event) => {
     setIsCheckboxClicked(state => !state)
@@ -57,7 +68,7 @@ const FavouriteItem = (props) => {
             </div>
           </th>
           <td className="align-middle">
-            <input type="checkbox" className="mb-0" style={{ fontWeight: "500" }} onChange={checkBoxChangeHandler} />
+            <input type="checkbox" className="mb-0" checked={isCheckboxClicked} style={{ fontWeight: "500" }} onChange={checkBoxChangeHandler} />
           </td>
           <td className="align-middle">
             <p className="mb-0" style={{ fontWeight: "500" }}>{productInformation.vendor}</p>
