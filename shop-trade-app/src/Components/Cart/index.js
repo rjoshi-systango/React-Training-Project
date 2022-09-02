@@ -11,6 +11,8 @@ const priceReducer = (state, action) => {
             subTotal: state.subTotal + action.productTotalPrice,
             tax: state.tax + (action.productTotalPrice * 5) / 100,
             total: state.total + (action.productTotalPrice + (action.productTotalPrice * 5) / 100),
+            isSelectAllClicked: state.isSelectAllClicked,
+            selectCount: state.selectCount
         }
     }
     if (action.type === false) {
@@ -18,35 +20,66 @@ const priceReducer = (state, action) => {
             subTotal: state.subTotal - action.productTotalPrice,
             tax: state.tax - (action.productTotalPrice * 5) / 100,
             total: state.total - (action.productTotalPrice + (action.productTotalPrice * 5) / 100),
+            isSelectAllClicked: state.isSelectAllClicked ? !state.isSelectAllClicked : state.isSelectAllClicked,
+            selectCount: state.selectCount
         }
     }
     if (action.type === "ADD") {
         const productPrice = parseInt(action.productTotalPrice);
-
         return {
             subTotal: state.subTotal + productPrice,
             tax: state.tax + (productPrice * 5) / 100,
             total: state.total + (productPrice + (productPrice * 5) / 100),
+            isSelectAllClicked: state.isSelectAllClicked,
+            selectCount: state.selectCount
         }
     }
     if (action.type === "SUB") {
         const productPrice = parseInt(action.productTotalPrice);
-        console.log(typeof (productPrice));
         return {
             subTotal: state.subTotal - productPrice,
             tax: state.tax - (productPrice * 5) / 100,
             total: state.total - (productPrice + (productPrice * 5) / 100),
+            isSelectAllClicked: state.isSelectAllClicked,
+            selectCount: state.selectCount
+        }
+    }
+    if (action.type === "SELECT_ALL") {
+        const allProductTotal = action.totalPrice;
+        return {
+            subTotal: allProductTotal,
+            tax: (allProductTotal * 5) / 100,
+            total: allProductTotal + ((allProductTotal * 5) / 100),
+            isSelectAllClicked : true,
+            selectCount: state.selectCount + 1
+        }
+    }
+    if (action.type === "DESELECT_ALL") {
+        return {
+            subTotal: 0,
+            tax: 0,
+            total: 0,
+            isSelectAllClicked: false,
+            selectCount: state.selectCount + 1
+        }
+    }
+    if (action.type === "") {
+        return {
+            subTotal: state.subTotal,
+            tax: state.tax,
+            total: state.total,
+            isSelectAllClicked: false,
+            selectCount: state.selectCount
         }
     }
 }
+
 const Cart = (props) => {
     const { productList } = props;
-    const [totalPrice, dispatch] = useReducer(priceReducer, { total: 0, tax: 0, subTotal: 0, isSelectAllClicked: false });
+    const [totalPrice, dispatch] = useReducer(priceReducer, { total: 0, tax: 0, subTotal: 0, isSelectAllClicked: false, selectCount: 0 });
     const [isOrderPlaced, setIsOrderPlaced] = useState(false);
     const portalElement = document.getElementById('overlays');
-    
     const history = useHistory();
-
 
     const calculateTotalPrice = (checkbox, productTotalPrice) => {
         dispatch({ type: checkbox, productTotalPrice });
@@ -58,6 +91,25 @@ const Cart = (props) => {
             setIsOrderPlaced(false);
             history.replace('/');
         }, 2000)
+    }
+
+    const selectAllChangleHandler = (event) => {
+        const { checked }= event.target;
+        let totalPrice = 0;
+        
+        if (checked) {
+            productList.forEach((product) => {
+                totalPrice += product.price * product.quantity
+            });
+            dispatch({type: "SELECT_ALL", totalPrice});
+        }
+        else {
+            dispatch({type: "DESELECT_ALL"});
+        }
+    }
+
+    const deSelectAll = (totalPrice) => {
+        dispatch({type: "", productTotalPrice: totalPrice });
     }
 
     const closeMessageBoxHandler = () => {
@@ -77,7 +129,9 @@ const Cart = (props) => {
                                         <tr>
                                             <th scope="col"> </th>
                                             <th scope="col" className="h5">Systango Shopping Bag</th>
-                                            <th scope="col">Select</th>
+                                            <th scope="col">
+                                                <input type='checkbox' checked={totalPrice.isSelectAllClicked} className={`mb-0`} onChange={selectAllChangleHandler}/>  Select
+                                            </th>
                                             <th scope="col">Brand</th>
                                             <th scope="col">Quantity</th>
                                             <th scope="col">Price</th>
@@ -87,6 +141,9 @@ const Cart = (props) => {
                                         <CartItem key={`${product.id} ${product.sizeId}`}
                                             productInformation={product}
                                             calculateTotalPrice={calculateTotalPrice}
+                                            isSelectAllClicked={totalPrice.isSelectAllClicked}
+                                            onProductDeselect={deSelectAll} 
+                                            selectCounter={totalPrice.selectCount}
                                         />
                                      ))
                                     }
